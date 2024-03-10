@@ -26,4 +26,17 @@ public interface UserService {
     int setpIDCard(pinfo patient);
     int updatepName(pinfo patient);
     int updatepGender(pinfo patient);
+    // 添加到现有方法声明中
+    int updatepPhone(pinfo patient);
+    int updatepAddress(pinfo patient);
+    int updatepHistory(pinfo patient);
+    int updatepOther(pinfo patient);
+    int updatepFamily(pinfo patient);
+    int updatepOtherInfo(pinfo patient);
+    int updatepFamilyInfo(pinfo patient);
+    int updatepSymptom(pinfo patient);
+    int updatepPicture(pinfo patient);
+    int updatepPasswordHash(pinfo patient);
+    int updatepPicture(String pIDCard, byte[] picture);
+
 }

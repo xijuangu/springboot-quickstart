@@ -103,26 +103,119 @@ public class UserServiceImpl implements UserService {
     public int updatepName(pinfo patient) {
         String sql = "UPDATE pinfo SET pName = :name WHERE pIDCard = :idCard";
         Map<String, Object> param = new HashMap<>();
-        param.put("name", patient.getName());
+        param.put("name", patient.getpName());
         param.put("idCard", patient.getpIDCard());
-
-        // 使用 jdbcTemplate 执行 update 语句
-        int updatedRows = jdbcTemplate.update(sql, param);
-
-        return updatedRows; // 返回更新的行数
+        return jdbcTemplate.update(sql, param);
     }
 
     @Override
     public int updatepGender(pinfo patient) {
         String sql = "UPDATE pinfo SET pGender = :gender WHERE pIDCard = :idCard";
         Map<String, Object> param = new HashMap<>();
-        param.put("gender", patient.getGender());
+        param.put("gender", patient.getpGender());
         param.put("idCard", patient.getpIDCard());
-
-        // 使用 jdbcTemplate 执行 update 语句
-        int updatedRows = jdbcTemplate.update(sql, param);
-
-        return updatedRows; // 返回更新的行数
+        return jdbcTemplate.update(sql, param);
     }
+
+    @Override
+    public int updatepPhone(pinfo patient) {
+        String sql = "UPDATE pinfo SET pPhone = :phone WHERE pIDCard = :idCard";
+        Map<String, Object> param = new HashMap<>();
+        param.put("phone", patient.getpPhone());
+        param.put("idCard", patient.getpIDCard());
+        return jdbcTemplate.update(sql, param);
+    }
+
+    @Override
+    public int updatepAddress(pinfo patient) {
+        String sql = "UPDATE pinfo SET pAddress = :address WHERE pIDCard = :idCard";
+        Map<String, Object> param = new HashMap<>();
+        param.put("address", patient.getpAddress());
+        param.put("idCard", patient.getpIDCard());
+        return jdbcTemplate.update(sql, param);
+    }
+
+    @Override
+    public int updatepHistory(pinfo patient) {
+        String sql = "UPDATE pinfo SET pHistory = :history WHERE pIDCard = :idCard";
+        Map<String, Object> param = new HashMap<>();
+        param.put("history", patient.getpHistory());
+        param.put("idCard", patient.getpIDCard());
+        return jdbcTemplate.update(sql, param);
+    }
+
+    @Override
+    public int updatepOther(pinfo patient) {
+        String sql = "UPDATE pinfo SET pOther = :other WHERE pIDCard = :idCard";
+        Map<String, Object> param = new HashMap<>();
+        param.put("other", patient.getpOther());
+        param.put("idCard", patient.getpIDCard());
+        return jdbcTemplate.update(sql, param);
+    }
+
+    @Override
+    public int updatepFamily(pinfo patient) {
+        String sql = "UPDATE pinfo SET pFamily = :family WHERE pIDCard = :idCard";
+        Map<String, Object> param = new HashMap<>();
+        param.put("family", patient.getpFamily());
+        param.put("idCard", patient.getpIDCard());
+        return jdbcTemplate.update(sql, param);
+    }
+
+    @Override
+    public int updatepOtherInfo(pinfo patient) {
+        String sql = "UPDATE pinfo SET pOtherInfo = :otherInfo WHERE pIDCard = :idCard";
+        Map<String, Object> param = new HashMap<>();
+        param.put("otherInfo", patient.getpOtherInfo());
+        param.put("idCard", patient.getpIDCard());
+        return jdbcTemplate.update(sql, param);
+    }
+
+    @Override
+    public int updatepFamilyInfo(pinfo patient) {
+        String sql = "UPDATE pinfo SET pFamilyInfo = :familyInfo WHERE pIDCard = :idCard";
+        Map<String, Object> param = new HashMap<>();
+        param.put("familyInfo", patient.getpFamilyInfo());
+        param.put("idCard", patient.getpIDCard());
+        return jdbcTemplate.update(sql, param);
+    }
+
+    @Override
+    public int updatepSymptom(pinfo patient) {
+        String sql = "UPDATE pinfo SET pSymptom = :symptom WHERE pIDCard = :idCard";
+        Map<String, Object> param = new HashMap<>();
+        param.put("symptom", patient.getpSymptom());
+        param.put("idCard", patient.getpIDCard());
+        return jdbcTemplate.update(sql, param);
+    }
+
+    @Override
+    public int updatepPicture(pinfo patient) {
+        // 注意，这里假设数据库可以直接存储byte[]类型的图片数据
+        String sql = "UPDATE pinfo SET pPicture = :picture WHERE pIDCard = :idCard";
+        Map<String, Object> param = new HashMap<>();
+        param.put("picture", patient.getpPicture());
+        param.put("idCard", patient.getpIDCard());
+        return jdbcTemplate.update(sql, param);
+    }
+
+    @Override
+    public int updatepPasswordHash(pinfo patient) {
+        String sql = "UPDATE pinfo SET pPasswordHash = :passwordHash WHERE pIDCard = :idCard";
+        Map<String, Object> param = new HashMap<>();
+        param.put("passwordHash", patient.getpPasswordHash());
+        param.put("idCard", patient.getpIDCard());
+        return jdbcTemplate.update(sql, param);
+    }
+
+    @Override
+    public int updatepPicture(String pIDCard, byte[] picture) {
+        String sql = "UPDATE pinfo SET pPicture = :picture WHERE pIDCard = :idCard";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("picture", picture);
+        paramMap.put("idCard", pIDCard);
+        return jdbcTemplate.update(sql, paramMap);
+    }
+
 
 }

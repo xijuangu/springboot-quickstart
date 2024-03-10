@@ -32,19 +32,19 @@ public class pinfo {
         return pIDCard;
     }
 
-    public void setName(String name) {
+    public void setpName(String name) {
         this.pName = name;
     }
 
-    public String getName() {
+    public String getpName() {
         return pName;
     }
 
-    public void setGender(String pGender) {
+    public void setpGender(String pGender) {
         this.pGender = pGender;
     }
 
-    public String getGender() {
+    public String getpGender() {
         return pGender;
     }
 

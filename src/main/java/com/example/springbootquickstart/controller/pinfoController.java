@@ -5,7 +5,10 @@ package com.example.springbootquickstart.controller;
 import com.example.springbootquickstart.pojo.pinfo;
 import com.example.springbootquickstart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @CrossOrigin
@@ -81,41 +84,121 @@ public class pinfoController {
 
 
     //pinfo setter
-    @ResponseBody
-    @RequestMapping(value = "/setpIDCard/{pIDCard}",method = RequestMethod.GET)
-    public pinfo setpIDCard(@PathVariable String pIDCard){
+    @PutMapping("/setpIDCard/{pIDCard}")
+    public pinfo setpIDCard(@PathVariable String pIDCard) {
         pinfo patient = new pinfo();
         patient.setpIDCard(pIDCard);
         userService.setpIDCard(patient);
-        //返回完整的patient信息
-        pinfo updatedPatient = userService.findPatientByIdCard(pIDCard);
-        return updatedPatient;
+        return userService.findPatientByIdCard(pIDCard);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/updatepNameBypIDCard/{pIDCard}/{pName}",method = RequestMethod.GET)
-    public pinfo updatepNameBypIDCard(@PathVariable String pIDCard, @PathVariable String pName){
+    @PutMapping("/updatepNameBypIDCard/{pIDCard}/{pName}")
+    public pinfo updatepNameBypIDCard(@PathVariable String pIDCard, @PathVariable String pName) {
         pinfo patient = new pinfo();
-        patient.setName(pName);
         patient.setpIDCard(pIDCard);
+        patient.setpName(pName);
         userService.updatepName(patient);
-        //返回完整的patient信息
-        pinfo updatedPatient = userService.findPatientByIdCard(pIDCard);
-        return updatedPatient;
+        return userService.findPatientByIdCard(pIDCard);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/updatepGenderBypIDCard/{pIDCard}/{pGender}",method = RequestMethod.GET)
-    public pinfo updatepGenderBypIDCard(@PathVariable String pIDCard, @PathVariable String pGender){
+
+    @PutMapping("/updatepGenderBypIDCard/{pIDCard}/{pGender}")
+    public pinfo updatepGenderBypIDCard(@PathVariable String pIDCard, @PathVariable String pGender) {
         pinfo patient = new pinfo();
-        patient.setGender(pGender);
         patient.setpIDCard(pIDCard);
+        patient.setpGender(pGender);
         userService.updatepGender(patient);
-        //返回完整的patient信息
-        pinfo updatedPatient = userService.findPatientByIdCard(pIDCard);
-        return updatedPatient;
+        return userService.findPatientByIdCard(pIDCard);
     }
 
+    @PutMapping("/updatepPhoneBypIDCard/{pIDCard}/{pPhone}")
+    public pinfo updatepPhoneBypIDCard(@PathVariable String pIDCard, @PathVariable String pPhone) {
+        pinfo patient = new pinfo();
+        patient.setpIDCard(pIDCard);
+        patient.setpPhone(pPhone);
+        userService.updatepPhone(patient);
+        return userService.findPatientByIdCard(pIDCard);
+    }
 
+    @PutMapping("/updatepHistoryBypIDCard/{pIDCard}/{history}")
+    public pinfo updatepHistoryBypIDCard(@PathVariable String pIDCard, @PathVariable Integer history) {
+        pinfo patient = new pinfo();
+        patient.setpIDCard(pIDCard);
+        patient.setpHistory(history);
+        userService.updatepHistory(patient);
+        return userService.findPatientByIdCard(pIDCard);
+    }
+
+    @PutMapping("/updatepOtherBypIDCard/{pIDCard}/{other}")
+    public pinfo updatepOtherBypIDCard(@PathVariable String pIDCard, @PathVariable Integer other) {
+        pinfo patient = new pinfo();
+        patient.setpIDCard(pIDCard);
+        patient.setpOther(other);
+        userService.updatepOther(patient);
+        return userService.findPatientByIdCard(pIDCard);
+    }
+
+    @PutMapping("/updatepFamilyBypIDCard/{pIDCard}/{family}")
+    public pinfo updatepFamilyBypIDCard(@PathVariable String pIDCard, @PathVariable Integer family) {
+        pinfo patient = new pinfo();
+        patient.setpIDCard(pIDCard);
+        patient.setpFamily(family);
+        userService.updatepFamily(patient);
+        return userService.findPatientByIdCard(pIDCard);
+    }
+
+    @PutMapping("/updatepOtherInfoBypIDCard/{pIDCard}/{otherInfo}")
+    public pinfo updatepOtherInfoBypIDCard(@PathVariable String pIDCard, @PathVariable String otherInfo) {
+        pinfo patient = new pinfo();
+        patient.setpIDCard(pIDCard);
+        patient.setpOtherInfo(otherInfo);
+        userService.updatepOtherInfo(patient);
+        return userService.findPatientByIdCard(pIDCard);
+    }
+
+    @PutMapping("/updatepFamilyInfoBypIDCard/{pIDCard}/{familyInfo}")
+    public pinfo updatepFamilyInfoBypIDCard(@PathVariable String pIDCard, @PathVariable String familyInfo) {
+        pinfo patient = new pinfo();
+        patient.setpIDCard(pIDCard);
+        patient.setpFamilyInfo(familyInfo);
+        userService.updatepFamilyInfo(patient);
+        return userService.findPatientByIdCard(pIDCard);
+    }
+
+    @PutMapping("/updatepSymptomBypIDCard/{pIDCard}/{symptom}")
+    public pinfo updatepSymptomBypIDCard(@PathVariable String pIDCard, @PathVariable String symptom) {
+        pinfo patient = new pinfo();
+        patient.setpIDCard(pIDCard);
+        patient.setpSymptom(symptom);
+        userService.updatepSymptom(patient);
+        return userService.findPatientByIdCard(pIDCard);
+    }
+
+    @PutMapping("/updatepPasswordHashBypIDCard/{pIDCard}/{passwordHash}")
+    public pinfo updatepPasswordHashBypIDCard(@PathVariable String pIDCard, @PathVariable String passwordHash) {
+        pinfo patient = new pinfo();
+        patient.setpIDCard(pIDCard);
+        patient.setpPasswordHash(passwordHash);
+        userService.updatepPasswordHash(patient);
+        return userService.findPatientByIdCard(pIDCard);
+    }
+
+    @PutMapping("/updatepPicture/{pIDCard}")
+    public ResponseEntity<?> updatepPicture(@PathVariable String pIDCard, @RequestParam("picture") MultipartFile picture) {
+        if (picture.isEmpty()) {
+            return ResponseEntity.badRequest().body("Picture is not provided");
+        }
+        try {
+            pinfo patient = userService.findPatientByIdCard(pIDCard);
+            if (patient == null) {
+                return ResponseEntity.notFound().build();
+            }
+            byte[] pictureBytes = picture.getBytes();
+            userService.updatepPicture(pIDCard, pictureBytes);
+            return ResponseEntity.ok().body("Picture updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating picture");
+        }
+    }
 
 }
