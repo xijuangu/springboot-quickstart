@@ -20,26 +20,18 @@ public class pinfoController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/name/{id}")
-    public String getUserNameById(@PathVariable Integer id) {
-        return userService.FindNameById(id);
-    }
-
-    @GetMapping("/address/{id}")
-    public String getUserAddressById(@PathVariable Integer id) {
-        return userService.FindAddressById(id);
-    }
-
     @GetMapping("/pName/{pIDCard}")
     public String getpNameBypIdCard(@PathVariable String pIDCard) {
         return userService.FindpNameBypIdCard(pIDCard);
     }
 
     @GetMapping("/history/{pIDCard}")
-    public Boolean getHistoryBypIdCard(@PathVariable String pIDCard) {
-        return userService.FindHistoryBypIdCard(pIDCard);
-    }
+    public Boolean getHistoryBypIdCard(@PathVariable String pIDCard) {return userService.FindHistoryBypIdCard(pIDCard);}
 
+    @GetMapping("/pAddress/{pIDCard}")
+    public String getAddressBypIdCard(@PathVariable String pIDCard) {
+        return userService.FindAddressById(pIDCard);
+    }
     @GetMapping("/other/{pIDCard}")
     public Boolean getOtherBypIdCard(@PathVariable String pIDCard) {
         return userService.FindOtherBypIdCard(pIDCard);
@@ -98,6 +90,15 @@ public class pinfoController {
         patient.setpIDCard(pIDCard);
         patient.setpName(pName);
         userService.updatepName(patient);
+        return userService.findPatientByIdCard(pIDCard);
+    }
+
+    @PutMapping("/updatepAddressBypIDCard/{pIDCard}/{pAddress}")
+    public pinfo updatepAddressBypIDCard(@PathVariable String pIDCard, @PathVariable String pAddress) {
+        pinfo patient = new pinfo();
+        patient.setpIDCard(pIDCard);
+        patient.setpAddress(pAddress);
+        userService.updatepAddress(patient);
         return userService.findPatientByIdCard(pIDCard);
     }
 
@@ -200,5 +201,11 @@ public class pinfoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating picture");
         }
     }
+    //    图片提交需要确保客户端在发送图片时使用multipart/form-data内容类型。如果是在HTML表单中，你的表单应该像这样：
+    //<form action="http://localhost:8080/updatepPicture/12345" method="post" enctype="multipart/form-data">
+    //    <input type="file" name="picture">
+    //    <input type="submit" value="Upload">
+    //</form>
+    //    对于非表单的客户端（如使用Fetch API的JavaScript代码），确保正确设置请求的Content-Type和正文。
 
 }

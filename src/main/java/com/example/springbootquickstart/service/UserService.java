@@ -8,8 +8,7 @@ public interface UserService {
 
     //pinfo getter
 
-    public String FindNameById(Integer id);
-    public String FindAddressById(Integer id);
+    public String FindAddressById(String id);
     public String FindpNameBypIdCard(String pIDCard);
     public Boolean FindHistoryBypIdCard(String pIDCard);
     public Boolean FindOtherBypIdCard(String pIDCard);
@@ -26,7 +25,6 @@ public interface UserService {
     int setpIDCard(pinfo patient);
     int updatepName(pinfo patient);
     int updatepGender(pinfo patient);
-    // 添加到现有方法声明中
     int updatepPhone(pinfo patient);
     int updatepAddress(pinfo patient);
     int updatepHistory(pinfo patient);
@@ -35,7 +33,7 @@ public interface UserService {
     int updatepOtherInfo(pinfo patient);
     int updatepFamilyInfo(pinfo patient);
     int updatepSymptom(pinfo patient);
-    int updatepPicture(pinfo patient);
+    // int updatepPicture(pinfo patient);
     int updatepPasswordHash(pinfo patient);
     int updatepPicture(String pIDCard, byte[] picture);
 

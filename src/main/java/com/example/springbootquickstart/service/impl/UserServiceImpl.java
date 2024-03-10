@@ -22,14 +22,11 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
-    @Override                               //重写了UserService接口中的findById方法
-    public String FindNameById(Integer id) {
-        return userMapper.FindNameById(id);
-    }
+
 
     @Override
-    public String FindAddressById(Integer id){
-        return userMapper.FindAddressById(id);
+    public String FindAddressById(String id){
+        return userMapper.FindpAddressBypIdCard(id);
     }
 
     @Override
@@ -37,42 +34,42 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean FindHistoryBypIdCard(String pIDCard) {
-        return userMapper.FindHistoryBypIdCard(pIDCard);
+        return userMapper.FindpHistoryBypIdCard(pIDCard);
     }
 
     @Override
     public Boolean FindOtherBypIdCard(String pIDCard) {
-        return userMapper.FindOtherBypIdCard(pIDCard);
+        return userMapper.FindpOtherBypIdCard(pIDCard);
     }
 
     @Override
     public Boolean FindFamilyBypIdCard(String pIDCard) {
-        return userMapper.FindFamilyBypIdCard(pIDCard);
+        return userMapper.FindpFamilyBypIdCard(pIDCard);
     }
 
     @Override
     public String FindOtherInfoBypIdCard(String pIDCard) {
-        return userMapper.FindOtherInfoBypIdCard(pIDCard);
+        return userMapper.FindpOtherInfoBypIdCard(pIDCard);
     }
 
     @Override
     public String FindFamilyInfoBypIdCard(String pIDCard) {
-        return userMapper.FindFamilyInfoBypIdCard(pIDCard);
+        return userMapper.FindpFamilyInfoBypIdCard(pIDCard);
     }
 
     @Override
     public String FindSymptomBypIdCard(String pIDCard) {
-        return userMapper.FindSymptomBypIdCard(pIDCard);
+        return userMapper.FindpSymptomBypIdCard(pIDCard);
     }
 
     @Override
     public byte[] FindPictureBypIdCard(String pIDCard) {
-        return userMapper.FindPictureBypIdCard(pIDCard);
+        return userMapper.FindpPictureBypIdCard(pIDCard);
     }
 
     @Override
     public String FindPasswordHashBypIdCard(String pIDCard) {
-        return userMapper.FindPasswordHashBypIdCard(pIDCard);
+        return userMapper.FindpPasswordHashBypIdCard(pIDCard);
     }
 
     @Override
@@ -185,16 +182,6 @@ public class UserServiceImpl implements UserService {
         String sql = "UPDATE pinfo SET pSymptom = :symptom WHERE pIDCard = :idCard";
         Map<String, Object> param = new HashMap<>();
         param.put("symptom", patient.getpSymptom());
-        param.put("idCard", patient.getpIDCard());
-        return jdbcTemplate.update(sql, param);
-    }
-
-    @Override
-    public int updatepPicture(pinfo patient) {
-        // 注意，这里假设数据库可以直接存储byte[]类型的图片数据
-        String sql = "UPDATE pinfo SET pPicture = :picture WHERE pIDCard = :idCard";
-        Map<String, Object> param = new HashMap<>();
-        param.put("picture", patient.getpPicture());
         param.put("idCard", patient.getpIDCard());
         return jdbcTemplate.update(sql, param);
     }
