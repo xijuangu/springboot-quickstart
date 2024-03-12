@@ -10,10 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 @CrossOrigin
 @RestController
 public class pinfoController {
+
+    @GetMapping("/getpinfoByPage")
+    public List<pinfo> getPinfoByPage(@RequestParam("page") int page, @RequestParam("size") int size) {
+        return userService.getPinfoByPage(page, size);
+    }
+
 
     //pinfo getter
 

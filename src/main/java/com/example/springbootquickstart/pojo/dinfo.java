@@ -2,6 +2,7 @@
 
 package com.example.springbootquickstart.pojo;
 
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -132,3 +133,5 @@ public class dinfo {
         this.dPasswordHash = dPasswordHash;
     }
 }
+
+

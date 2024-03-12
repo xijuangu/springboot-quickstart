@@ -5,6 +5,7 @@ package com.example.springbootquickstart.service;
 import com.example.springbootquickstart.pojo.dinfo;
 import com.example.springbootquickstart.pojo.pinfo;
 import java.util.Date;
+import java.util.List;
 
 public interface UserService {
 
@@ -64,4 +65,7 @@ public interface UserService {
     int updateDPictureBydId(String dId, byte[] dPicture);
     int updateDPasswordHashBydId(String dId, String dPasswordHash);
 
+    List<pinfo> getPinfoByPage(int page, int size);
+
+    List<dinfo> getDinfoByPage(int page, int size);
 }

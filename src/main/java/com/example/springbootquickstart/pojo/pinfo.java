@@ -5,8 +5,10 @@ package com.example.springbootquickstart.pojo;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "pInfo")
 public class pinfo {
     @Id
     private String pIDCard;

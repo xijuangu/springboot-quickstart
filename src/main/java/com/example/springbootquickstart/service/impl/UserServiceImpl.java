@@ -14,11 +14,26 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
 @Repository
 public class UserServiceImpl implements UserService {
+
+
+    // pinfo分页查询
+    public List<pinfo> getPinfoByPage(int page, int size) {
+        int offset = (page - 1) * size;
+        return userMapper.findPinfoByPage(offset, size);
+    }
+
+    // dinfo分页查询
+    public List<dinfo> getDinfoByPage(int page, int size) {
+        int offset = (page - 1) * size;
+        return userMapper.findDinfoByPage(offset, size);
+    }
+
 
     //pinfo getter
 

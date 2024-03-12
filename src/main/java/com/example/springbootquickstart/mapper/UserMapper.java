@@ -2,8 +2,13 @@
 
 package com.example.springbootquickstart.mapper;
 
+import com.example.springbootquickstart.pojo.dinfo;
+import com.example.springbootquickstart.pojo.pinfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -37,5 +42,10 @@ public interface UserMapper {
 
     @Select("select pPasswordHash from pinfo where pIDCard = #{pIDCard}")
     public String FindpPasswordHashBypIdCard(String pIDCard);
+
+    // 分页查询实现
+    List<pinfo> findPinfoByPage(@Param("offset") int offset, @Param("limit") int limit);
+
+    List<dinfo> findDinfoByPage(@Param("offset") int offset, @Param("limit") int limit);
 }
 

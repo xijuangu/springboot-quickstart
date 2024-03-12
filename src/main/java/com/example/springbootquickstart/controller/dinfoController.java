@@ -3,6 +3,7 @@
 package com.example.springbootquickstart.controller;
 
 import com.example.springbootquickstart.pojo.dinfo;
+import com.example.springbootquickstart.pojo.pinfo;
 import com.example.springbootquickstart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,11 +13,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/dinfo")
 @CrossOrigin
 public class dinfoController {
+
+    @GetMapping("/getdinfoByPage")
+    public List<dinfo> getDinfoByPage(@RequestParam("page") int page, @RequestParam("size") int size) {
+        return userService.getDinfoByPage(page, size);
+    }
 
     @Autowired
     private UserService userService;
@@ -131,37 +139,21 @@ public class dinfoController {
 
 
     // dinfo setter
-
-
-    // 一次性定义&更新整行
     @PostMapping("/")
-    public ResponseEntity<Void> setDinfo(@RequestBody dinfo doctorInfo) {
-        try {
-            userService.setDinfo(doctorInfo);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Void> createDinfo(@RequestBody Map<String, String> dIdMap) {      //请求体需要大括号加列名加值
+        String dId = dIdMap.get("dId");
+        if (dId == null || dId.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        dinfo newDoctorInfo = new dinfo();
+        newDoctorInfo.setDId(dId);
+        userService.setDinfo(newDoctorInfo);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{dId}")
-    public ResponseEntity<Void> updateDinfo(@PathVariable String dId, @RequestBody dinfo doctorInfo) {
-        try {
-            dinfo existingDoctor = userService.findDinfoById(dId);
-            if (existingDoctor != null) {
-                doctorInfo.setDId(dId);
-                userService.setDinfo(doctorInfo);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     @PutMapping("/name/{dId}")
-    public ResponseEntity<?> updateDName(@PathVariable String dId, @RequestBody String newName) {
+    public ResponseEntity<?> updateDName(@PathVariable String dId, @RequestBody String newName) {       //请求体不需要大括号，只需要一个值
         try {
             userService.updateDNameBydId(dId, newName);
             return ResponseEntity.ok().build();
