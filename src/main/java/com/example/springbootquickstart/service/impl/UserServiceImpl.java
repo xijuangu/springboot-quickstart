@@ -55,6 +55,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Integer FindAgeByIdCard(String pIDCard) { return userMapper.FindpAgeBypIdCard(pIDCard); }
+
+    @Override
     public Boolean FindOtherBypIdCard(String pIDCard) {
         return userMapper.FindpOtherBypIdCard(pIDCard);
     }
@@ -101,6 +104,31 @@ public class UserServiceImpl implements UserService {
     //setter
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
+
+    @Override
+    public int saveOrUpdatePinfo(pinfo patient) {
+        String sql = "INSERT INTO pinfo (pIDCard, pName, pAge, pGender, pPhone, pAddress, pHistory, pOther, pFamily, pOtherInfo, pFamilyInfo, pSymptom, pPicture, pPasswordHash) " +
+                "VALUES (:pIDCard, :pName, :pAge, :pGender, :pPhone, :pAddress, :pHistory, :pOther, :pFamily, :pOtherInfo, :pFamilyInfo, :pSymptom, :pPicture, :pPasswordHash) " +
+                "ON DUPLICATE KEY UPDATE pName = :pName, pAge = :pAge, pGender = :pGender, pPhone = :pPhone, pAddress = :pAddress, pHistory = :pHistory, pOther = :pOther, pFamily = :pFamily, pOtherInfo = :pOtherInfo, pFamilyInfo = :pFamilyInfo, pSymptom = :pSymptom, pPicture = :pPicture, pPasswordHash = :pPasswordHash";
+        Map<String, Object> params = new HashMap<>();
+        params.put("pIDCard", patient.getpIDCard());
+        params.put("pName", patient.getpName());
+        params.put("pAge", patient.getpAge());
+        params.put("pGender", patient.getpGender());
+        params.put("pPhone", patient.getpPhone());
+        params.put("pAddress", patient.getpAddress());
+        params.put("pHistory", patient.getpHistory());
+        params.put("pOther", patient.getpOther());
+        params.put("pFamily", patient.getpFamily());
+        params.put("pOtherInfo", patient.getpOtherInfo());
+        params.put("pFamilyInfo", patient.getpFamilyInfo());
+        params.put("pSymptom", patient.getpSymptom());
+        params.put("pPicture", patient.getpPicture());
+        params.put("pPasswordHash", patient.getpPasswordHash());
+
+        return jdbcTemplate.update(sql, params);
+    }
+
 
     @Override
     public int setpIDCard(pinfo patient) {

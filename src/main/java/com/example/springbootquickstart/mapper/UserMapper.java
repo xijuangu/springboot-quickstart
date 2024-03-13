@@ -22,6 +22,9 @@ public interface UserMapper {
     @Select("select pHistory from pinfo where pIDCard = #{pIDCard}")
     public Boolean FindpHistoryBypIdCard(String pIDCard);
 
+    @Select("select pAge from pinfo where pIDCard = #{pIDCard}")
+    public Integer FindpAgeBypIdCard(String pIDCard);
+
     @Select("select pOther from pinfo where pIDCard = #{pIDCard}")
     public Boolean FindpOtherBypIdCard(String pIDCard);
 

@@ -40,10 +40,17 @@ public class pinfoController {
     public String getAddressBypIdCard(@PathVariable String pIDCard) {
         return userService.FindAddressById(pIDCard);
     }
+
     @GetMapping("/other/{pIDCard}")
     public Boolean getOtherBypIdCard(@PathVariable String pIDCard) {
         return userService.FindOtherBypIdCard(pIDCard);
     }
+
+    @GetMapping("/pAge/{pIDCard}")
+    public Integer getpAgeBypIdCard(@PathVariable String pIDCard) {
+        return userService.FindAgeByIdCard(pIDCard);
+    }
+
 
     @GetMapping("/family/{pIDCard}")
     public Boolean getFamilyBypIdCard(@PathVariable String pIDCard) {
@@ -84,6 +91,19 @@ public class pinfoController {
 
 
     //pinfo setter
+
+    @PostMapping("/addOrUpdatePinfo")
+    public ResponseEntity<?> addOrUpdatePinfo(@RequestBody pinfo patientInfo) {
+        try {
+            int result = userService.saveOrUpdatePinfo(patientInfo);
+            if (result == 0) {
+                return new ResponseEntity<>("No changes made to the database.", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Patient information saved/updated successfully.", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving/updating patient information: " + e.getMessage());
+        }
+    }
     @PutMapping("/setpIDCard/{pIDCard}")
     public pinfo setpIDCard(@PathVariable String pIDCard) {
         pinfo patient = new pinfo();

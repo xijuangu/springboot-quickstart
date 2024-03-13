@@ -13,6 +13,7 @@ public class pinfo {
     @Id
     private String pIDCard;
     private String pName;
+    private Integer pAge;
     private String pGender;
     private String pPhone;
     private String pAddress;
@@ -40,6 +41,12 @@ public class pinfo {
 
     public String getpName() {
         return pName;
+    }
+
+    public void setpAge(Integer age) { this.pAge = age; }
+
+    public Integer getpAge() {
+        return pAge;
     }
 
     public void setpGender(String pGender) {

@@ -14,6 +14,7 @@ public interface UserService {
     public String FindAddressById(String id);
     public String FindpNameBypIdCard(String pIDCard);
     public Boolean FindHistoryBypIdCard(String pIDCard);
+    public Integer FindAgeByIdCard(String pIDCard);
     public Boolean FindOtherBypIdCard(String pIDCard);
     public Boolean FindFamilyBypIdCard(String pIDCard);
     public String FindOtherInfoBypIdCard(String pIDCard);
@@ -25,6 +26,8 @@ public interface UserService {
     public pinfo findPatientByIdCard(String pIDCard);
 
     //pinfo setter
+
+    int saveOrUpdatePinfo(pinfo patient);
     int setpIDCard(pinfo patient);
     int updatepName(pinfo patient);
     int updatepGender(pinfo patient);
