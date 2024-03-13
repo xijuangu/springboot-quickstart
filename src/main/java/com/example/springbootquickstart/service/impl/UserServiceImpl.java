@@ -3,6 +3,7 @@
 package com.example.springbootquickstart.service.impl;
 
 import com.example.springbootquickstart.mapper.UserMapper;
+import com.example.springbootquickstart.pojo.communicationrecord;
 import com.example.springbootquickstart.pojo.dinfo;
 import com.example.springbootquickstart.pojo.pinfo;
 import com.example.springbootquickstart.service.UserService;
@@ -434,6 +435,35 @@ public class UserServiceImpl implements UserService {
         params.put("dId", dId);
         params.put("dPasswordHash", dPasswordHash);
         return jdbcTemplate.update(sql, params);
+    }
+
+
+
+    // communication record
+
+    @Override
+    public void addCommunicationRecord(communicationrecord record) {
+        userMapper.insertCommunicationRecord(record);
+    }
+
+    @Override
+    public communicationrecord getCommunicationRecordById(int crId) {
+        return userMapper.selectCommunicationRecordById(crId);
+    }
+
+    @Override
+    public List<communicationrecord> getAllCommunicationRecords() {
+        return userMapper.selectAllCommunicationRecords();
+    }
+
+    @Override
+    public void updateCommunicationRecord(communicationrecord record) {
+        userMapper.updateCommunicationRecord(record);
+    }
+
+    @Override
+    public void deleteCommunicationRecord(int crId) {
+        userMapper.deleteCommunicationRecord(crId);
     }
 
 }

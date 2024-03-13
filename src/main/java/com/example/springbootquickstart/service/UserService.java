@@ -2,6 +2,7 @@
 
 package com.example.springbootquickstart.service;
 
+import com.example.springbootquickstart.pojo.communicationrecord;
 import com.example.springbootquickstart.pojo.dinfo;
 import com.example.springbootquickstart.pojo.pinfo;
 import java.util.Date;
@@ -71,4 +72,24 @@ public interface UserService {
     List<pinfo> getPinfoByPage(int page, int size);
 
     List<dinfo> getDinfoByPage(int page, int size);
+
+
+
+    // communication record
+
+    // 添加通讯记录
+    void addCommunicationRecord(communicationrecord record);
+
+    // 根据crId获取通讯记录
+    communicationrecord getCommunicationRecordById(int crId);
+
+    // 获取所有通讯记录
+    List<communicationrecord> getAllCommunicationRecords();
+
+    // 更新通讯记录
+    void updateCommunicationRecord(communicationrecord record);
+
+    // 删除通讯记录
+    void deleteCommunicationRecord(int crId);
+
 }

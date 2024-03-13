@@ -2,11 +2,10 @@
 
 package com.example.springbootquickstart.mapper;
 
+import com.example.springbootquickstart.pojo.communicationrecord;
 import com.example.springbootquickstart.pojo.dinfo;
 import com.example.springbootquickstart.pojo.pinfo;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -50,5 +49,39 @@ public interface UserMapper {
     List<pinfo> findPinfoByPage(@Param("offset") int offset, @Param("limit") int limit);
 
     List<dinfo> findDinfoByPage(@Param("offset") int offset, @Param("limit") int limit);
+
+
+
+
+
+
+    // communication record
+
+    // 插入通讯记录
+    @Insert("INSERT INTO communicationrecord (crId, pIDCard, dID, crText, crTime, crTexter) VALUES (#{crId}, #{pIDCard}, #{dID}, #{crText}, #{crTime}, #{crTexter})")
+    void insertCommunicationRecord(communicationrecord record);
+
+    // 根据ID选择通讯记录
+    @Select("SELECT * FROM communicationrecord WHERE crId = #{crId}")
+    communicationrecord selectCommunicationRecordById(int crId);
+
+    // 选择所有通讯记录
+    @Select("SELECT * FROM communicationrecord")
+    List<communicationrecord> selectAllCommunicationRecords();
+
+    // 更新通讯记录
+    @Update("UPDATE communicationrecord SET pIDCard = #{pIDCard}, dID = #{dID}, crText = #{crText}, crTime = #{crTime}, crTexter = #{crTexter} WHERE crId = #{crId}")
+    void updateCommunicationRecord(communicationrecord record);
+
+    // 删除通讯记录
+    @Delete("DELETE FROM communicationrecord WHERE crId = #{crId}")
+    void deleteCommunicationRecord(int crId);
+
+
+
+
+
+
+
 }
 

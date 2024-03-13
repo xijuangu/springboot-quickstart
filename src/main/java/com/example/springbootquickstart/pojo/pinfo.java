@@ -73,7 +73,7 @@ public class pinfo {
         return pAddress;
     }
 
-    // 在 pinfo 类中添加以下 getter 和 setter 方法
+    // getter 和 setter 方法
 
     public Integer getpHistory() {
         return pHistory;
