@@ -470,6 +470,10 @@ public class UserServiceImpl implements UserService {
     public void addDiagnosisRequest(diagnosisrequest request) {
         userMapper.insertDiagnosisRequest(request);
     }
+    @Override
+    public diagnosisrequest getDiagnosisRequestById(int drId) {
+        return userMapper.findDiagnosisRequestById(drId);
+    }
 
 
     // image type 操作
@@ -477,11 +481,19 @@ public class UserServiceImpl implements UserService {
     public void addImageType(imagetype imageType) {
         userMapper.insertImageType(imageType);
     }
+    @Override
+    public imagetype getImageTypeById(int imageTypeId) {
+        return userMapper.findImageTypeById(imageTypeId);
+    }
 
     // stage 操作
     @Override
     public void addStage(stage Stage) {
         userMapper.insertStage(Stage);
+    }
+    @Override
+    public stage getStageById(int stageId) {
+        return userMapper.findStageById(stageId);
     }
 
 }

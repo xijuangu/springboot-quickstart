@@ -59,4 +59,28 @@ public class DiagnosisRequestController {
         return new ResponseEntity<>("Diagnosis request added successfully", HttpStatus.CREATED);
     }
 
+
+    @GetMapping("/{drIdStr}")
+    public ResponseEntity<diagnosisrequest> getDiagnosisRequestById(@PathVariable String drIdStr) {
+        // 尝试将drId字符串转换为int
+        int drId;
+        try {
+            drId = Integer.parseInt(drIdStr);
+        } catch (NumberFormatException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // 使用服务层方法根据drId获取diagnosisrequest对象
+        diagnosisrequest request = userService.getDiagnosisRequestById(drId);
+
+        // 检查是否找到记录
+        if (request == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // 返回找到的diagnosisrequest记录
+        return new ResponseEntity<>(request, HttpStatus.OK);
+    }
+
+
 }

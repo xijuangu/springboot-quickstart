@@ -47,4 +47,21 @@ public class ImageTypeController {
         // 返回响应实体
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @GetMapping("/{imageTypeId}")
+    public ResponseEntity<?> getImageTypeById(@PathVariable("imageTypeId") String imageTypeIdStr) {
+        int imageTypeId;
+        try {
+            imageTypeId = Integer.parseInt(imageTypeIdStr);
+        } catch (NumberFormatException e) {
+            return new ResponseEntity<>("Invalid format for ImageTypeId", HttpStatus.BAD_REQUEST);
+        }
+
+        imagetype foundImageType = userService.getImageTypeById(imageTypeId);
+        if (foundImageType == null) {
+            return new ResponseEntity<>("ImageType not found", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(foundImageType, HttpStatus.OK);
+    }
 }

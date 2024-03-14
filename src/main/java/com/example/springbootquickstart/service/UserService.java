@@ -95,13 +95,16 @@ public interface UserService {
 
     // diagnosisrequest的添加数据操作
     void addDiagnosisRequest(diagnosisrequest request);
+    diagnosisrequest getDiagnosisRequestById(int drId);
 
 
     // image type 操作
     void addImageType(imagetype imageType);
+    imagetype getImageTypeById(int imageTypeId);
 
 
     // stage 操作
     void addStage(stage Stage);
+    stage getStageById(int stageId);
 
 }

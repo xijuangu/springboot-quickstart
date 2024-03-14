@@ -80,15 +80,24 @@ public interface UserMapper {
     @Insert("INSERT INTO diagnosisrequest (drId, dId, ImageTypeId, StageId, Image) VALUES (#{drId}, #{dId}, #{ImageTypeId}, #{StageId}, #{Image})")
     void insertDiagnosisRequest(diagnosisrequest request);
 
+    @Select("SELECT * FROM diagnosisrequest WHERE drId = #{drId}")
+    diagnosisrequest findDiagnosisRequestById(int drId);
+
 
     // image type 操作
     @Insert("INSERT INTO imagetype (ImageTypeId, ImageTypeName) VALUES (#{ImageTypeId}, #{ImageTypeName})")
     void insertImageType(imagetype imageType);
 
+    @Select("SELECT * FROM imagetype WHERE ImageTypeId = #{imageTypeId}")
+    imagetype findImageTypeById(int imageTypeId);
+
 
     // stage  操作
     @Insert("INSERT INTO stage (StageId, StageName) VALUES (#{StageId}, #{StageName})")
     void insertStage(stage Stage);
+
+    @Select("SELECT * FROM stage WHERE StageId = #{stageId}")
+    stage findStageById(int stageId);
 
 
 

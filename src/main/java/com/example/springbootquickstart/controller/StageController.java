@@ -47,4 +47,21 @@ public class StageController {
         // 返回响应实体
         return new ResponseEntity<>("Stage added successfully", HttpStatus.CREATED);
     }
+
+    @GetMapping("/{stageId}")
+    public ResponseEntity<?> getStageById(@PathVariable("stageId") String stageIdStr) {
+        int stageId;
+        try {
+            stageId = Integer.parseInt(stageIdStr);
+        } catch (NumberFormatException e) {
+            return new ResponseEntity<>("Invalid format for StageId", HttpStatus.BAD_REQUEST);
+        }
+
+        stage foundStage = userService.getStageById(stageId);
+        if (foundStage == null) {
+            return new ResponseEntity<>("Stage not found", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(foundStage, HttpStatus.OK);
+    }
 }
