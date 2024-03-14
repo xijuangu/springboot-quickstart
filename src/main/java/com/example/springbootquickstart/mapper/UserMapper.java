@@ -2,9 +2,7 @@
 
 package com.example.springbootquickstart.mapper;
 
-import com.example.springbootquickstart.pojo.communicationrecord;
-import com.example.springbootquickstart.pojo.dinfo;
-import com.example.springbootquickstart.pojo.pinfo;
+import com.example.springbootquickstart.pojo.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -78,6 +76,19 @@ public interface UserMapper {
     void deleteCommunicationRecord(int crId);
 
 
+    // diagnosis request 操作
+    @Insert("INSERT INTO diagnosisrequest (drId, dId, ImageTypeId, StageId, Image) VALUES (#{drId}, #{dId}, #{ImageTypeId}, #{StageId}, #{Image})")
+    void insertDiagnosisRequest(diagnosisrequest request);
+
+
+    // image type 操作
+    @Insert("INSERT INTO imagetype (ImageTypeId, ImageTypeName) VALUES (#{ImageTypeId}, #{ImageTypeName})")
+    void insertImageType(imagetype imageType);
+
+
+    // stage  操作
+    @Insert("INSERT INTO stage (StageId, StageName) VALUES (#{StageId}, #{StageName})")
+    void insertStage(stage Stage);
 
 
 

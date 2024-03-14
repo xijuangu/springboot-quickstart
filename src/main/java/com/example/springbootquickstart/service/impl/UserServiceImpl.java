@@ -3,9 +3,7 @@
 package com.example.springbootquickstart.service.impl;
 
 import com.example.springbootquickstart.mapper.UserMapper;
-import com.example.springbootquickstart.pojo.communicationrecord;
-import com.example.springbootquickstart.pojo.dinfo;
-import com.example.springbootquickstart.pojo.pinfo;
+import com.example.springbootquickstart.pojo.*;
 import com.example.springbootquickstart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -464,6 +462,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteCommunicationRecord(int crId) {
         userMapper.deleteCommunicationRecord(crId);
+    }
+
+
+    // diagnosis request 添加数据操作
+    @Override
+    public void addDiagnosisRequest(diagnosisrequest request) {
+        userMapper.insertDiagnosisRequest(request);
+    }
+
+
+    // image type 操作
+    @Override
+    public void addImageType(imagetype imageType) {
+        userMapper.insertImageType(imageType);
+    }
+
+    // stage 操作
+    @Override
+    public void addStage(stage Stage) {
+        userMapper.insertStage(Stage);
     }
 
 }

@@ -21,6 +21,7 @@ import java.util.Map;
 @CrossOrigin
 public class dinfoController {
 
+    //分页显示
     @GetMapping("/getdinfoByPage")
     public List<dinfo> getDinfoByPage(@RequestParam("page") int page, @RequestParam("size") int size) {
         return userService.getDinfoByPage(page, size);

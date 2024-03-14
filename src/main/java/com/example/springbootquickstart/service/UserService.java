@@ -2,9 +2,8 @@
 
 package com.example.springbootquickstart.service;
 
-import com.example.springbootquickstart.pojo.communicationrecord;
-import com.example.springbootquickstart.pojo.dinfo;
-import com.example.springbootquickstart.pojo.pinfo;
+import com.example.springbootquickstart.pojo.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -91,5 +90,18 @@ public interface UserService {
 
     // 删除通讯记录
     void deleteCommunicationRecord(int crId);
+
+
+
+    // diagnosisrequest的添加数据操作
+    void addDiagnosisRequest(diagnosisrequest request);
+
+
+    // image type 操作
+    void addImageType(imagetype imageType);
+
+
+    // stage 操作
+    void addStage(stage Stage);
 
 }
