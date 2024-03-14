@@ -20,27 +20,34 @@ public class DiagnosisRequestController {
     @PostMapping("/add")
     public ResponseEntity<?> addDiagnosisRequest(@RequestBody Map<String, String> requestMap) {
         // Extracting information from requestMap
+        String drIdStr = requestMap.get("drId"); // 获取drId
         String dId = requestMap.get("dId");
         String imageTypeIdStr = requestMap.get("ImageTypeId");
         String stageIdStr = requestMap.get("StageId");
         String image = requestMap.get("Image");
 
         // Basic validation
-        if (dId == null || dId.isEmpty() || imageTypeIdStr == null || stageIdStr == null || image == null) {
+        if (drIdStr == null || drIdStr.isEmpty() || dId == null || dId.isEmpty() || imageTypeIdStr == null || stageIdStr == null || image == null) {
             return new ResponseEntity<>("Missing fields in request", HttpStatus.BAD_REQUEST);
         }
 
+        System.out.println("Before conversion - drIdStr: " + drIdStr + ", ImageTypeIdStr: " + imageTypeIdStr + ", StageIdStr: " + stageIdStr);
+
         // Converting String to Integer
-        int imageTypeId, stageId;
+        int drId, imageTypeId, stageId;
         try {
+            drId = Integer.parseInt(drIdStr); // 转换drId
             imageTypeId = Integer.parseInt(imageTypeIdStr);
             stageId = Integer.parseInt(stageIdStr);
         } catch (NumberFormatException e) {
-            return new ResponseEntity<>("Invalid format for ImageTypeId or StageId", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Invalid format for drId, ImageTypeId or StageId", HttpStatus.BAD_REQUEST);
         }
+
+        System.out.println("After conversion - drId: " + drId + ", ImageTypeId: " + imageTypeId + ", StageId: " + stageId);
 
         // Creating a new diagnosisrequest object
         diagnosisrequest newRequest = new diagnosisrequest();
+        newRequest.setDrId(drId); // 设置drId
         newRequest.setDId(dId);
         newRequest.setImageTypeId(imageTypeId);
         newRequest.setStageId(stageId);
@@ -51,4 +58,5 @@ public class DiagnosisRequestController {
 
         return new ResponseEntity<>("Diagnosis request added successfully", HttpStatus.CREATED);
     }
+
 }
