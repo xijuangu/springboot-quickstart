@@ -100,6 +100,35 @@ public interface UserMapper {
     stage findStageById(int stageId);
 
 
+    // predictfeedback操作
+    @Insert("INSERT INTO predictfeedback (PredictFeedbackId, ImageTypeId, StageId, ModelName, PredictFeedbackComment, drId, ModelResult) VALUES (#{PredictFeedbackId}, #{ImageTypeId}, #{StageId}, #{ModelName}, #{PredictFeedbackComment}, #{drId}, #{ModelResult})")
+    void insertPredictFeedback(predictfeedback feedback);
+    @Select("SELECT * FROM predictfeedback WHERE PredictFeedbackId = #{PredictFeedbackId}")
+    predictfeedback findPredictFeedbackById(int PredictFeedbackId);
+
+
+    // model操作
+    @Insert("INSERT INTO model (ModelName, StageId, ImageTypeId, api_path) VALUES (#{ModelName}, #{StageId}, #{ImageTypeId}, #{apiPath})")
+    void insertModel(model model);
+
+    @Select("SELECT * FROM model WHERE ModelName = #{ModelName}")
+    model findModelByName(String ModelName);
+
+
+    // patientfeedback 操作
+    @Insert("INSERT INTO patientfeedback (PatientFeedbackId, pIDCard, pfTime, PatientFeedbackComment, pfLikesCount, pfComentText) VALUES (#{PatientFeedbackId}, #{pIDCard}, #{pfTime}, #{PatientFeedbackComment}, #{pfLikesCount}, #{pfComentText})")
+    void insertPatientFeedback(patientfeedback patientFeedback);
+
+    @Select("SELECT * FROM patientfeedback WHERE PatientFeedbackId = #{PatientFeedbackId}")
+    patientfeedback findPatientFeedbackById(String PatientFeedbackId);
+
+
+    // User表操作
+    @Insert("INSERT INTO User(username, password, userType) VALUES(#{username}, #{password}, #{userType})")
+    int insertUser(User user);
+
+    @Select("SELECT * FROM User WHERE id = #{id}")
+    User findUserById(int id);
 
 
 

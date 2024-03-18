@@ -496,4 +496,58 @@ public class UserServiceImpl implements UserService {
         return userMapper.findStageById(stageId);
     }
 
+
+
+    // predictfeedback操作
+    @Override
+    public void addPredictFeedback(predictfeedback feedback) {
+        userMapper.insertPredictFeedback(feedback);
+    }
+
+    @Override
+    public predictfeedback getPredictFeedbackById(int PredictFeedbackId) {
+        return userMapper.findPredictFeedbackById(PredictFeedbackId);
+    }
+
+
+
+    // model操作
+    @Override
+    public void addModel(model model) {
+        userMapper.insertModel(model);
+    }
+
+    @Override
+    public model getModelByName(String ModelName) {
+        return userMapper.findModelByName(ModelName);
+    }
+
+
+
+
+    // patientfeedback操作
+    @Override
+    public void addPatientFeedback(patientfeedback patientFeedback) {
+        userMapper.insertPatientFeedback(patientFeedback);
+    }
+
+    @Override
+    public patientfeedback getPatientFeedbackById(String PatientFeedbackId) {
+        return userMapper.findPatientFeedbackById(PatientFeedbackId);
+    }
+
+
+
+    // user表操作
+    @Override
+    public boolean addUser(User user) {
+        int affectedRows = userMapper.insertUser(user);
+        return affectedRows > 0;
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return userMapper.findUserById(id);
+    }
+
 }

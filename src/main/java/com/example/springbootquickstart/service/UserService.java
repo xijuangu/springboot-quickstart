@@ -107,4 +107,24 @@ public interface UserService {
     void addStage(stage Stage);
     stage getStageById(int stageId);
 
+
+    // predictfeedback 操作
+    void addPredictFeedback(predictfeedback feedback);
+    predictfeedback getPredictFeedbackById(int PredictFeedbackId);
+
+
+    // model操作
+    void addModel(model model);
+    model getModelByName(String ModelName);
+
+
+    // patientfeedback操作
+    void addPatientFeedback(patientfeedback patientFeedback);
+    patientfeedback getPatientFeedbackById(String PatientFeedbackId);
+
+
+    // user表操作
+    boolean addUser(User user);
+    User getUserById(int id);
+
 }

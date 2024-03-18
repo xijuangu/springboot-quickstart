@@ -141,7 +141,7 @@ public class dinfoController {
 
     // dinfo setter
     @PostMapping("/")
-    public ResponseEntity<Void> createDinfo(@RequestBody Map<String, String> dIdMap) {      //请求体需要大括号加列名加值
+    public ResponseEntity<Void> createDinfo(@RequestBody Map<String, String> dIdMap) {
         String dId = dIdMap.get("dId");
         if (dId == null || dId.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
