@@ -49,11 +49,17 @@ public class UserServiceImpl implements UserService {
 
 
 
-    // dinfo分页查询
-    public List<dinfo> getDinfoByPage(int page, int size) {
+    // dinfo分页查询,新增两个参数
+    /*public List<dinfo> getDinfoByPage(int page, int size) {
         int offset = (page - 1) * size;
         return userMapper.findDinfoByPage(offset, size);
+    }*/
+
+    public List<dinfo> getDinfoByPage(int page, int size, String dName, String dJob) {
+        int offset = (page - 1) * size;
+        return userMapper.findDinfoByPage(offset, size, dName, dJob);
     }
+
 
 
     //pinfo getter

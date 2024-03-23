@@ -10,3 +10,4 @@ spring:
 mybatis:
   type-aliases-package: com.example.springbootquickstart.pojo
   mapper-locations: classpath:/mapper/**/*.xml
+

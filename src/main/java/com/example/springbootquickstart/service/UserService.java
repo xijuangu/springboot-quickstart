@@ -72,7 +72,10 @@ public interface UserService {
 
     // 返回列表
     List<pinfo> getPinfoByPage(int page, int size);
-    List<dinfo> getDinfoByPage(int page, int size);
+
+//    List<dinfo> getDinfoByPage(int page, int size);
+    List<dinfo> getDinfoByPage(int page, int size, String dName, String dJob);
+
 
     // 根据名字找pinfo
     List<pinfo> getPinfoByName(String pName);

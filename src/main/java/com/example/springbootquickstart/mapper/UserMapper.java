@@ -25,6 +25,19 @@ public interface UserMapper {
     @Select("select * from communicationrecord where dID = #{dID}")
     public List<communicationrecord> FindCRByDid(String dID);
 
+    @Select("<script>" +
+            "select * from dinfo" +
+            "<where>" +
+            "  <if test='dName != null'>AND dName = #{dName}</if>" +
+            "  <if test='dJob != null'>AND dJob = #{dJob}</if>" +
+            "</where>" +
+            "limit #{limit} offset #{offset}" +
+            "</script>")
+    List<dinfo> findDinfoByPage(@Param("offset") int offset,
+                                @Param("limit") int limit,
+                                @Param("dName") String dName,
+                                @Param("dJob") String dJob);
+
 
 
 
@@ -63,10 +76,10 @@ public interface UserMapper {
     @Select("select pPasswordHash from pinfo where pIDCard = #{pIDCard}")
     public String FindpPasswordHashBypIdCard(String pIDCard);
 
-    // 分页查询实现
+    // pinfo分页查询
     List<pinfo> findPinfoByPage(@Param("offset") int offset, @Param("limit") int limit);
-
-    List<dinfo> findDinfoByPage(@Param("offset") int offset, @Param("limit") int limit);
+    // dinfo分页查询
+//    List<dinfo> findDinfoByPage(@Param("offset") int offset, @Param("limit") int limit);
 
 
 

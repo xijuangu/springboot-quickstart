@@ -29,16 +29,23 @@ public class dinfoController {
     }
 
     //分页显示
-    @GetMapping("/getdinfoByPage")
+   /* @GetMapping("/getdinfoByPage")
     public List<dinfo> getDinfoByPage(@RequestParam("page") int page, @RequestParam("size") int size) {
         return userService.getDinfoByPage(page, size);
+    }*/
+    @GetMapping("/getDinfoByPage")
+    public List<dinfo> getDinfoByPage(@RequestParam("page") int page,
+                                      @RequestParam("size") int size,
+                                      @RequestParam(required = false) String dName,
+                                      @RequestParam(required = false) String dJob) {
+        return userService.getDinfoByPage(page, size, dName, dJob);
     }
 
     @Autowired
     private UserService userService;
 
     // dinfo getter
-    @GetMapping("/{dId}")
+    @GetMapping("/getDinfoById/{dId}")
     public ResponseEntity<dinfo> getDinfoById(@PathVariable String dId) {
         dinfo doctor = userService.findDinfoById(dId);
         if (doctor != null) {
