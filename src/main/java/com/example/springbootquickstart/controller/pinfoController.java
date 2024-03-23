@@ -17,11 +17,18 @@ import java.util.List;
 @RestController
 public class pinfoController {
 
+    // 根据名字找pinfo
+    @GetMapping("/getpinfoByName/{pName}")
+    public List<pinfo> getPinfoByName(@PathVariable String pName) {
+        return userService.getPinfoByName(pName);
+    }
+
+
+    // 分页查询pinfo
     @GetMapping("/getpinfoByPage")
     public List<pinfo> getPinfoByPage(@RequestParam("page") int page, @RequestParam("size") int size) {
         return userService.getPinfoByPage(page, size);
     }
-
 
     //pinfo getter
 

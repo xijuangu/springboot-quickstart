@@ -10,6 +10,26 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
+
+    // 根据名字找pinfo
+    @Select("select * from pinfo where pName = #{pName}")
+    public List<pinfo> FindpINFOBypName(String pName);
+
+    // 根据职位找dinfo
+    @Select("select * from dinfo where dJob = #{Job}")
+    public List<dinfo> FindDinfoByJob(String Job);
+
+    // 通过ID找聊天记录
+    @Select("select * from communicationrecord where pIDCard = #{pIDCard}")
+    public List<communicationrecord> FindCRByPid(String pIDCard);
+    @Select("select * from communicationrecord where dID = #{dID}")
+    public List<communicationrecord> FindCRByDid(String dID);
+
+
+
+
+    // pinfo操作……
+
     @Select("select pAddress from pinfo where pIDCard = #{pIDCard}")
     public String FindpAddressBypIdCard(String pIDCard);
 
@@ -130,6 +150,35 @@ public interface UserMapper {
     @Select("SELECT * FROM User WHERE id = #{id}")
     User findUserById(int id);
 
+
+
+    // SendPicture操作
+
+    // 插入图片发送记录
+    @Insert("INSERT INTO SendPicture (sp_id, sp_picture, pIDCard, dID, sp_time, sender) VALUES (#{sp_id}, #{sp_picture}, #{pIDCard}, #{dID}, #{sp_time}, #{sender})")
+    void insertSendPicture(SendPicture record);
+
+    // 根据ID选择图片发送记录
+    @Select("SELECT * FROM SendPicture WHERE sp_id = #{sp_id}")
+    SendPicture selectSendPictureById(int sp_id);
+
+    // 选择所有图片发送记录
+    @Select("SELECT * FROM SendPicture")
+    List<SendPicture> selectAllSendPictures();
+
+    // 更新图片发送记录
+    @Update("UPDATE SendPicture SET pIDCard = #{pIDCard}, dID = #{dID}, sp_picture = #{sp_picture}, sp_time = #{sp_time}, sender = #{sender} WHERE sp_id = #{sp_id}")
+    void updateSendPicture(SendPicture record);
+
+    // 删除图片发送记录
+    @Delete("DELETE FROM SendPicture WHERE sp_id = #{sp_id}")
+    void deleteSendPicture(int sp_id);
+
+    // 通过ID找图片发送记录
+    @Select("SELECT * FROM SendPicture WHERE pIDCard = #{pIDCard}")
+    List<SendPicture> FindSPByPid(String pIDCard);
+    @Select("SELECT * FROM SendPicture WHERE dID = #{dID}")
+    List<SendPicture> FindSPByDid(String dID);
 
 
 }

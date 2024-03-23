@@ -21,11 +21,33 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
 
 
+    // 通过ID找聊天记录
+    public List<communicationrecord> findCRByPid(String pIDCard){
+        return userMapper.FindCRByPid(pIDCard);
+    }
+    public List<communicationrecord> findCRByDid(String dID){
+        return userMapper.FindCRByDid(dID);
+    }
+
+
     // pinfo分页查询
     public List<pinfo> getPinfoByPage(int page, int size) {
         int offset = (page - 1) * size;
         return userMapper.findPinfoByPage(offset, size);
     }
+
+
+    // 根据名字找pinfo
+    public List<pinfo> getPinfoByName(String pName){
+        return userMapper.FindpINFOBypName(pName);
+    }
+
+    // 根据职位找dinfo
+    public List<dinfo> getDinfoByJob(String Job){
+        return userMapper.FindDinfoByJob(Job);
+    }
+
+
 
     // dinfo分页查询
     public List<dinfo> getDinfoByPage(int page, int size) {
@@ -549,5 +571,44 @@ public class UserServiceImpl implements UserService {
     public User getUserById(int id) {
         return userMapper.findUserById(id);
     }
+
+
+
+
+    // SendPicture操作
+
+    @Override
+    public void addSendPicture(SendPicture record) {
+        userMapper.insertSendPicture(record);
+    }
+
+    @Override
+    public SendPicture getSendPictureById(int sp_id) {
+        return userMapper.selectSendPictureById(sp_id);
+    }
+
+    @Override
+    public List<SendPicture> getAllSendPictures() {
+        return userMapper.selectAllSendPictures();
+    }
+
+    @Override
+    public void updateSendPicture(SendPicture record) {
+        userMapper.updateSendPicture(record);
+    }
+
+    @Override
+    public void deleteSendPicture(int sp_id) {
+        userMapper.deleteSendPicture(sp_id);
+    }
+
+    // 通过ID找图片发送记录
+    public List<SendPicture> findSPByPid(String pIDCard){
+        return userMapper.FindSPByPid(pIDCard);
+    }
+    public List<SendPicture> findSPByDid(String dID){
+        return userMapper.FindSPByDid(dID);
+    }
+
 
 }

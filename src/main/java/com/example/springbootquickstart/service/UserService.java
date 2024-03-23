@@ -68,9 +68,19 @@ public interface UserService {
     int updateDPictureBydId(String dId, byte[] dPicture);
     int updateDPasswordHashBydId(String dId, String dPasswordHash);
 
-    List<pinfo> getPinfoByPage(int page, int size);
 
+
+    // 返回列表
+    List<pinfo> getPinfoByPage(int page, int size);
     List<dinfo> getDinfoByPage(int page, int size);
+
+    // 根据名字找pinfo
+    List<pinfo> getPinfoByName(String pName);
+
+    // 根据职位找dinfo
+    List<dinfo> getDinfoByJob(String Job);
+
+
 
 
 
@@ -87,6 +97,11 @@ public interface UserService {
 
     // 更新通讯记录
     void updateCommunicationRecord(communicationrecord record);
+
+
+    // 通过ID找聊天记录
+    List<communicationrecord> findCRByPid(String pIDCard);
+    List<communicationrecord> findCRByDid(String dID);
 
     // 删除通讯记录
     void deleteCommunicationRecord(int crId);
@@ -126,5 +141,31 @@ public interface UserService {
     // user表操作
     boolean addUser(User user);
     User getUserById(int id);
+
+
+
+
+    // SendPicture操作
+
+    // 添加图片发送记录
+    void addSendPicture(SendPicture record);
+
+    // 根据sp_id获取图片发送记录
+    SendPicture getSendPictureById(int sp_id);
+
+    // 获取所有图片发送记录
+    List<SendPicture> getAllSendPictures();
+
+    // 更新图片发送记录
+    void updateSendPicture(SendPicture record);
+
+    // 通过pIDCard找图片发送记录
+    List<SendPicture> findSPByPid(String pIDCard);
+    // 通过dID找图片发送记录
+    List<SendPicture> findSPByDid(String dID);
+
+    // 删除图片发送记录
+    void deleteSendPicture(int sp_id);
+
 
 }

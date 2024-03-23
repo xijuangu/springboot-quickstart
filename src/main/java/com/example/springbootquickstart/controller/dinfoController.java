@@ -21,6 +21,13 @@ import java.util.Map;
 @CrossOrigin
 public class dinfoController {
 
+
+    // 根据职位找dinfo
+    @GetMapping("/getDinfoByJob/{dJob}")
+    public List<dinfo> getDinfoByJob(@PathVariable String dJob) {
+        return userService.getDinfoByJob(dJob);
+    }
+
     //分页显示
     @GetMapping("/getdinfoByPage")
     public List<dinfo> getDinfoByPage(@RequestParam("page") int page, @RequestParam("size") int size) {
