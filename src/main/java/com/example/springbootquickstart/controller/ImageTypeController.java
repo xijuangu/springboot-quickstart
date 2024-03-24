@@ -7,12 +7,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/imageTypes")
 @CrossOrigin
 public class ImageTypeController {
+
+
+    @GetMapping("/getImageTypeByPage")
+    public List<imagetype> getImageTypeByPage(@RequestParam("page") int page,
+                                              @RequestParam("size") int size,
+                                              @RequestParam(required = false) String typeName) {
+        return userService.getImageTypeByPage(page, size, typeName);
+    }
+
 
     @Autowired
     private UserService userService;

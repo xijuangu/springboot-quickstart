@@ -514,6 +514,12 @@ public class UserServiceImpl implements UserService {
         return userMapper.findImageTypeById(imageTypeId);
     }
 
+    @Override
+    public List<imagetype> getImageTypeByPage(int page, int size, String typeName) {
+        int offset = (page - 1) * size;
+        return userMapper.findImageTypeByPage(offset, size, typeName);
+    }
+
     // stage 操作
     @Override
     public void addStage(stage Stage) {
@@ -522,6 +528,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public stage getStageById(int stageId) {
         return userMapper.findStageById(stageId);
+    }
+    @Override
+    public List<stage> getStageByPage(int page, int size, String stageName) {
+        int offset = (page - 1) * size;
+        return userMapper.findStageByPage(offset, size, stageName);
     }
 
 

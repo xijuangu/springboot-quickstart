@@ -89,7 +89,9 @@ public interface UserMapper {
     // communication record
 
     // 插入通讯记录
-    @Insert("INSERT INTO communicationrecord (crId, pIDCard, dID, crText, crTime, crTexter) VALUES (#{crId}, #{pIDCard}, #{dID}, #{crText}, #{crTime}, #{crTexter})")
+//    @Insert("INSERT INTO communicationrecord (crId, pIDCard, dID, crText, crTime, crTexter) VALUES (#{crId}, #{pIDCard}, #{dID}, #{crText}, #{crTime}, #{crTexter})")
+//    void insertCommunicationRecord(communicationrecord record);
+    @Insert("INSERT INTO communicationrecord ( pIDCard, dID, crText, crTime, crTexter) VALUES ( #{pIDCard}, #{dID}, #{crText}, #{crTime}, #{crTexter})")
     void insertCommunicationRecord(communicationrecord record);
 
     // 根据ID选择通讯记录
@@ -124,6 +126,17 @@ public interface UserMapper {
     @Select("SELECT * FROM imagetype WHERE ImageTypeId = #{imageTypeId}")
     imagetype findImageTypeById(int imageTypeId);
 
+    @Select("<script>" +
+            "select * from imagetype" +
+            "<where>" +
+            "  <if test='typeName != null'>AND ImageTypeName = #{typeName}</if>" +
+            "</where>" +
+            "limit #{limit} offset #{offset}" +
+            "</script>")
+    List<imagetype> findImageTypeByPage(@Param("offset") int offset,
+                                        @Param("limit") int limit,
+                                        @Param("typeName") String typeName);
+
 
     // stage  操作
     @Insert("INSERT INTO stage (StageId, StageName) VALUES (#{StageId}, #{StageName})")
@@ -131,6 +144,16 @@ public interface UserMapper {
 
     @Select("SELECT * FROM stage WHERE StageId = #{stageId}")
     stage findStageById(int stageId);
+    @Select("<script>" +
+            "select * from stage" +
+            "<where>" +
+            "  <if test='stageName != null'>AND StageName = #{stageName}</if>" +
+            "</where>" +
+            "limit #{limit} offset #{offset}" +
+            "</script>")
+    List<stage> findStageByPage(@Param("offset") int offset,
+                                @Param("limit") int limit,
+                                @Param("stageName") String stageName);
 
 
     // predictfeedback操作

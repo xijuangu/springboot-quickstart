@@ -7,12 +7,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/stages")
 @CrossOrigin
 public class StageController {
+
+    @GetMapping("/getStageByPage")
+    public List<stage> getStageByPage(@RequestParam("page") int page,
+                                      @RequestParam("size") int size,
+                                      @RequestParam(required = false) String stageName) {
+        return userService.getStageByPage(page, size, stageName);
+    }
 
     @Autowired
     private UserService userService;

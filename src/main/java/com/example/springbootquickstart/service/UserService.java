@@ -119,11 +119,13 @@ public interface UserService {
     // image type 操作
     void addImageType(imagetype imageType);
     imagetype getImageTypeById(int imageTypeId);
+    List<imagetype> getImageTypeByPage(int page, int size, String typeName);
 
 
     // stage 操作
     void addStage(stage Stage);
     stage getStageById(int stageId);
+    List<stage> getStageByPage(int page, int size, String stageName);
 
 
     // predictfeedback 操作
