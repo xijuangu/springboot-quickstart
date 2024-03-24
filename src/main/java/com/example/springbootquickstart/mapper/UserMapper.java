@@ -4,11 +4,26 @@ package com.example.springbootquickstart.mapper;
 
 import com.example.springbootquickstart.pojo.*;
 import org.apache.ibatis.annotations.*;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 @Mapper
 public interface UserMapper {
+
+    // dinfo查询计数
+    @Select("SELECT COUNT(*) FROM dinfo")
+    long count();
+
+    @Select("<script>" +
+            "SELECT COUNT(*) FROM dinfo" +
+            "<where>" +
+            "  <if test='dName != null and dName != \"\"'>AND dName = #{dName}</if>" +
+            "  <if test='dJob != null and dJob != \"\"'>AND dJob = #{dJob}</if>" +
+            "</where>" +
+            "</script>")
+    long countByConditions(@Param("dName") String dName, @Param("dJob") String dJob);
+
 
 
     // 根据名字找pinfo
@@ -169,6 +184,19 @@ public interface UserMapper {
 
     @Select("SELECT * FROM model WHERE ModelName = #{ModelName}")
     model findModelByName(String ModelName);
+
+    @Select("<script>" +
+            "select * from model" +
+            "<where>" +
+            "  <if test='stageId != null'>AND StageId = #{stageId}</if>" +
+            "  <if test='imageTypeId != null'>AND ImageTypeId = #{imageTypeId}</if>" +
+            "</where>" +
+            "limit #{limit} offset #{offset}" +
+            "</script>")
+    List<model> findModelByPage(@Param("offset") int offset,
+                                @Param("limit") int limit,
+                                @Param("stageId") Integer stageId,
+                                @Param("imageTypeId") Integer imageTypeId);
 
 
     // patientfeedback 操作

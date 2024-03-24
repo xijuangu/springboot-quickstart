@@ -20,6 +20,18 @@ import java.util.Map;
 @Repository
 public class UserServiceImpl implements UserService {
 
+    // 计算符合条件的记录总数
+    public long countDinfo(String dName, String dJob) {
+        return userMapper.countByConditions(dName, dJob);
+    }
+
+
+
+    // 计算所有记录的总数
+    public long countTotalDinfo() {
+        return userMapper.count(); // 使用 JpaRepository 的 count 方法
+    }
+
 
     // 通过ID找聊天记录
     public List<communicationrecord> findCRByPid(String pIDCard){
@@ -278,6 +290,7 @@ public class UserServiceImpl implements UserService {
 
 
     // dinfo getters
+
     @Override
     public dinfo findDinfoById(String dId) {
         String sql = "SELECT * FROM dinfo WHERE dId = :dId";
@@ -559,6 +572,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public model getModelByName(String ModelName) {
         return userMapper.findModelByName(ModelName);
+    }
+
+    public List<model> getModelByPage(int page, int size, Integer stageId, Integer imageTypeId) {
+        int offset = (page - 1) * size;
+        return userMapper.findModelByPage(offset, size, stageId, imageTypeId);
     }
 
 

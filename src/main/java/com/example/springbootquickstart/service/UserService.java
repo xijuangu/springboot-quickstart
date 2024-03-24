@@ -9,6 +9,9 @@ import java.util.List;
 
 public interface UserService {
 
+    public long countDinfo(String dName, String dJob);
+    public long countTotalDinfo();
+
     //pinfo getter
 
     public String FindAddressById(String id);
@@ -45,6 +48,8 @@ public interface UserService {
 
 
     // dinfo getters
+
+
     dinfo findDinfoById(String dId);
     String findDNameBydId(String dId);
     String findDGenderBydId(String dId);
@@ -136,6 +141,7 @@ public interface UserService {
     // model操作
     void addModel(model model);
     model getModelByName(String ModelName);
+    List<model> getModelByPage(int page, int size, Integer stageId, Integer imageTypeId);
 
 
     // patientfeedback操作

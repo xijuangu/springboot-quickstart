@@ -21,6 +21,15 @@ import java.util.Map;
 @CrossOrigin
 public class dinfoController {
 
+    @GetMapping("/getDinfoCount")
+    public long getDinfoCount(@RequestParam(required = false) String dName,
+                              @RequestParam(required = false) String dJob) {
+        if (dName == null && dJob == null) {
+            return userService.countTotalDinfo();
+        }
+        return userService.countDinfo(dName, dJob);
+    }
+
 
     // 根据职位找dinfo
     @GetMapping("/getDinfoByJob/{dJob}")

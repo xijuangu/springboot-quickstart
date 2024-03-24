@@ -7,12 +7,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/models")
 @CrossOrigin
 public class ModelController {
+
+    @GetMapping("/getModelByPage")
+    public List<model> getModelByPage(@RequestParam("page") int page,
+                                      @RequestParam("size") int size,
+                                      @RequestParam(required = false) Integer stageId,
+                                      @RequestParam(required = false) Integer imageTypeId) {
+        return userService.getModelByPage(page, size, stageId, imageTypeId);
+    }
 
     @Autowired
     private UserService userService;
