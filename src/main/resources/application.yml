@@ -3,9 +3,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://124.70.213.233/mybatis
-    username: test
-    password: 123456
+    url: jdbc:mysql://139.196.224.113/mybatis
+    username: root
+    password: ZW042104wz
 
 mybatis:
   type-aliases-package: com.example.springbootquickstart.pojo

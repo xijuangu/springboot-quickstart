@@ -6,6 +6,7 @@ import com.example.springbootquickstart.pojo.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -85,6 +86,8 @@ public interface UserService {
     // 根据名字找pinfo
     List<pinfo> getPinfoByName(String pName);
 
+    List<pinfo> getPinfoBySymptom(String pName, String pSymptom, int page, int size);
+
     // 根据职位找dinfo
     List<dinfo> getDinfoByJob(String Job);
 
@@ -119,6 +122,9 @@ public interface UserService {
     // diagnosisrequest的添加数据操作
     void addDiagnosisRequest(diagnosisrequest request);
     diagnosisrequest getDiagnosisRequestById(int drId);
+    List<diagnosisrequest> getDiagnosisRequestsByPIDCard(String pIDCard);
+    List<Map<String, Object>> getImagesByPIDCard(String pIDCard);
+
 
 
     // image type 操作
@@ -136,6 +142,7 @@ public interface UserService {
     // predictfeedback 操作
     void addPredictFeedback(predictfeedback feedback);
     predictfeedback getPredictFeedbackById(int PredictFeedbackId);
+    predictfeedback getPredictFeedbackByDrId(int drId);
 
 
     // model操作
@@ -146,7 +153,9 @@ public interface UserService {
 
     // patientfeedback操作
     void addPatientFeedback(patientfeedback patientFeedback);
-    patientfeedback getPatientFeedbackById(String PatientFeedbackId);
+    patientfeedback getPatientFeedbackById(int PatientFeedbackId);
+    List<PatientFeedbackDetail> getPatientFeedbackByDid(String dID) ;
+
 
 
     // user表操作

@@ -2,11 +2,15 @@ package com.example.springbootquickstart.controller;
 
 import com.example.springbootquickstart.pojo.diagnosisrequest;
 import com.example.springbootquickstart.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,51 +22,51 @@ public class DiagnosisRequestController {
     private UserService userService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addDiagnosisRequest(@RequestBody Map<String, String> requestMap) {
-        // Extracting information from requestMap
-        String drIdStr = requestMap.get("drId"); // 获取drId
-        String dId = requestMap.get("dId");
-        String imageTypeIdStr = requestMap.get("ImageTypeId");
-        String stageIdStr = requestMap.get("StageId");
-        String image = requestMap.get("Image");
+    public ResponseEntity<?> addDiagnosisRequest(@RequestBody Map<String, Object> requestMap) {
+        // 从请求映射中提取字段
+        String dId = (String) requestMap.get("dId");
+        //  String imageTypeIdStr = (String) requestMap.get("ImageTypeId");
+        String ModelName = (String) requestMap.get("ModelName");
+        //  int operationFlag = (int) requestMap.get("operationFlag");
+        // 此处处理Image字段时，需要正确处理它是一个Map的情况
+        Object imageObject = requestMap.get("Image");
+        String pIDCard = (String) requestMap.get("pIDCard");
 
-        // Basic validation
-        if (drIdStr == null || drIdStr.isEmpty() || dId == null || dId.isEmpty() || imageTypeIdStr == null || stageIdStr == null || image == null) {
-            return new ResponseEntity<>("Missing fields in request", HttpStatus.BAD_REQUEST);
-        }
+        // 基本验证省略
 
-        System.out.println("Before conversion - drIdStr: " + drIdStr + ", ImageTypeIdStr: " + imageTypeIdStr + ", StageIdStr: " + stageIdStr);
+        // 转换ImageTypeId为整数
+//        int imageTypeId;
+//        try {
+//            imageTypeId = Integer.parseInt(imageTypeIdStr);
+//        } catch (NumberFormatException e) {
+//            return new ResponseEntity<>("Invalid format for ImageTypeId", HttpStatus.BAD_REQUEST);
+//        }
 
-        // Converting String to Integer
-        int drId, imageTypeId, stageId;
+        // 将Image对象转换为JSON字符串
+        ObjectMapper objectMapper = new ObjectMapper();
+        String imageJson = null;
         try {
-            drId = Integer.parseInt(drIdStr); // 转换drId
-            imageTypeId = Integer.parseInt(imageTypeIdStr);
-            stageId = Integer.parseInt(stageIdStr);
-        } catch (NumberFormatException e) {
-            return new ResponseEntity<>("Invalid format for drId, ImageTypeId or StageId", HttpStatus.BAD_REQUEST);
+            imageJson = objectMapper.writeValueAsString(imageObject);
+        } catch (JsonProcessingException e) {
+            return new ResponseEntity<>("Error processing image JSON", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        System.out.println("After conversion - drId: " + drId + ", ImageTypeId: " + imageTypeId + ", StageId: " + stageId);
-
-        // Creating a new diagnosisrequest object
+        // 创建新的diagnosisrequest对象并设置字段
         diagnosisrequest newRequest = new diagnosisrequest();
-        newRequest.setDrId(drId); // 设置drId
         newRequest.setDId(dId);
-        newRequest.setImageTypeId(imageTypeId);
-        newRequest.setStageId(stageId);
-        newRequest.setImage(image);
+        newRequest.setModelName(ModelName);
+        //  newRequest.setoperationFlag(operationFlag);
+        newRequest.setImage(imageJson); // 使用转换后的JSON字符串设置Image字段
+        newRequest.setPIDCard(pIDCard);
 
-        // Adding the new diagnosisrequest to the database
+        // 添加到数据库的逻辑不变
         userService.addDiagnosisRequest(newRequest);
 
         return new ResponseEntity<>("Diagnosis request added successfully", HttpStatus.CREATED);
     }
 
-
     @GetMapping("/{drIdStr}")
     public ResponseEntity<diagnosisrequest> getDiagnosisRequestById(@PathVariable String drIdStr) {
-        // 尝试将drId字符串转换为int
         int drId;
         try {
             drId = Integer.parseInt(drIdStr);
@@ -70,17 +74,29 @@ public class DiagnosisRequestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        // 使用服务层方法根据drId获取diagnosisrequest对象
         diagnosisrequest request = userService.getDiagnosisRequestById(drId);
-
-        // 检查是否找到记录
         if (request == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // 返回找到的diagnosisrequest记录
         return new ResponseEntity<>(request, HttpStatus.OK);
     }
 
+    @GetMapping("/getByPIDCard/{pIDCard}")
+    public ResponseEntity<List<diagnosisrequest>> getDiagnosisRequestsByPIDCard(@PathVariable String pIDCard) {
+        List<diagnosisrequest> requests = userService.getDiagnosisRequestsByPIDCard(pIDCard);
+        if (requests.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(requests, HttpStatus.OK);
+    }
 
+    @GetMapping("/imagesByPIDCard/{pIDCard}")
+    public ResponseEntity<List<Map<String, Object>>> getImagesByPIDCard(@PathVariable String pIDCard) {
+        List<Map<String, Object>> images = userService.getImagesByPIDCard(pIDCard);
+        if (images.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(images, HttpStatus.OK);
+    }
 }

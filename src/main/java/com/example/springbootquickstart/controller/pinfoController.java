@@ -23,6 +23,14 @@ public class pinfoController {
         return userService.getPinfoByName(pName);
     }
 
+    @GetMapping("/getpinfoBySymptom")
+    public List<pinfo> getPinfoByNameAndSymptom(@RequestParam(value = "page") int offset,
+                                                @RequestParam(value = "size") int limit,
+                                                @RequestParam(value = "pName", required = false) String pName,
+                                                @RequestParam(value = "pSymptom", required = false) String pSymptom) {
+        return userService.getPinfoBySymptom(pName, pSymptom, offset, limit);
+    }
+
 
     // 分页查询pinfo
     @GetMapping("/getpinfoByPage")

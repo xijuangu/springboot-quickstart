@@ -17,6 +17,9 @@ public class communicationrecord {
     @Column(length = 20)
     private String dID;
 
+    @Column(length = 255)
+    private String crType;
+
     @Lob
     private String crText;
 
@@ -47,6 +50,14 @@ public class communicationrecord {
 
     public String getdID() {
         return dID;
+    }
+
+    public String getCrType() {
+        return crType;
+    }
+
+    public void setCrType(String crType) {
+        this.crType = crType;
     }
 
     public void setCrTime(Date crTime) {

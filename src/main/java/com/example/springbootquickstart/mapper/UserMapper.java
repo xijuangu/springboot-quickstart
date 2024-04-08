@@ -7,9 +7,13 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UserMapper {
+
+
+
 
     // dinfo查询计数
     @Select("SELECT COUNT(*) FROM dinfo")
@@ -30,6 +34,21 @@ public interface UserMapper {
     @Select("select * from pinfo where pName = #{pName}")
     public List<pinfo> FindpINFOBypName(String pName);
 
+    /*@Select("SELECT * FROM pinfo WHERE pName = #{pName} AND pSymptom = #{pSymptom} LIMIT #{offset}, #{limit}")
+    List<pinfo> findPinfoBySymptom(@Param("pName") String pName, @Param("pSymptom") String pSymptom, @Param("offset") int offset, @Param("limit") int limit);
+*/
+    @Select("<script>" +
+            "SELECT * FROM pinfo" +
+            "<where>" +
+            "  <if test='pName != null'>AND pName = #{pName}</if>" +
+            "  <if test='pSymptom != null'>AND pSymptom = #{pSymptom}</if>" +
+            "</where>" +
+            "LIMIT #{limit} OFFSET #{offset}" +
+            "</script>")
+    List<pinfo> findPinfoBySymptom(@Param("pName") String pName,
+                                   @Param("pSymptom") String pSymptom,
+                                   @Param("offset") int offset,
+                                   @Param("limit") int limit);
     // 根据职位找dinfo
     @Select("select * from dinfo where dJob = #{Job}")
     public List<dinfo> FindDinfoByJob(String Job);
@@ -106,8 +125,9 @@ public interface UserMapper {
     // 插入通讯记录
 //    @Insert("INSERT INTO communicationrecord (crId, pIDCard, dID, crText, crTime, crTexter) VALUES (#{crId}, #{pIDCard}, #{dID}, #{crText}, #{crTime}, #{crTexter})")
 //    void insertCommunicationRecord(communicationrecord record);
-    @Insert("INSERT INTO communicationrecord ( pIDCard, dID, crText, crTime, crTexter) VALUES ( #{pIDCard}, #{dID}, #{crText}, #{crTime}, #{crTexter})")
+    @Insert("INSERT INTO communicationrecord (pIDCard, dID, crText, crTime, crTexter, crType) VALUES (#{pIDCard}, #{dID}, #{crText}, #{crTime}, #{crTexter}, #{crType})")
     void insertCommunicationRecord(communicationrecord record);
+
 
     // 根据ID选择通讯记录
     @Select("SELECT * FROM communicationrecord WHERE crId = #{crId}")
@@ -118,7 +138,7 @@ public interface UserMapper {
     List<communicationrecord> selectAllCommunicationRecords();
 
     // 更新通讯记录
-    @Update("UPDATE communicationrecord SET pIDCard = #{pIDCard}, dID = #{dID}, crText = #{crText}, crTime = #{crTime}, crTexter = #{crTexter} WHERE crId = #{crId}")
+    @Update("UPDATE communicationrecord SET pIDCard = #{pIDCard}, dID = #{dID}, crText = #{crText}, crTime = #{crTime}, crTexter = #{crTexter}, crType = #{crType} WHERE crId = #{crId}")
     void updateCommunicationRecord(communicationrecord record);
 
     // 删除通讯记录
@@ -127,11 +147,18 @@ public interface UserMapper {
 
 
     // diagnosis request 操作
-    @Insert("INSERT INTO diagnosisrequest (drId, dId, ImageTypeId, StageId, Image) VALUES (#{drId}, #{dId}, #{ImageTypeId}, #{StageId}, #{Image})")
+    @Insert("INSERT INTO diagnosisrequest (drId, dId, Image, pIDCard, ModelName) VALUES (#{drId}, #{dId}, #{Image}, #{pIDCard}, #{ModelName})")
     void insertDiagnosisRequest(diagnosisrequest request);
 
     @Select("SELECT * FROM diagnosisrequest WHERE drId = #{drId}")
     diagnosisrequest findDiagnosisRequestById(int drId);
+
+    @Select("SELECT * FROM diagnosisrequest WHERE pIDCard = #{pIDCard}")
+    List<diagnosisrequest> findDiagnosisRequestsByPIDCard(String pIDCard);
+    @Select("SELECT Image, drId FROM diagnosisrequest WHERE pIDCard = #{pIDCard}")
+    List<Map<String, Object>> findImagesByPIDCard(String pIDCard);
+
+
 
 
     // image type 操作
@@ -176,6 +203,8 @@ public interface UserMapper {
     void insertPredictFeedback(predictfeedback feedback);
     @Select("SELECT * FROM predictfeedback WHERE PredictFeedbackId = #{PredictFeedbackId}")
     predictfeedback findPredictFeedbackById(int PredictFeedbackId);
+    @Select("SELECT * FROM predictfeedback WHERE drId = #{drId}")
+    predictfeedback findPredictFeedbackByDrId(int drId);
 
 
     // model操作
@@ -200,11 +229,25 @@ public interface UserMapper {
 
 
     // patientfeedback 操作
-    @Insert("INSERT INTO patientfeedback (PatientFeedbackId, pIDCard, pfTime, PatientFeedbackComment, pfLikesCount, pfComentText) VALUES (#{PatientFeedbackId}, #{pIDCard}, #{pfTime}, #{PatientFeedbackComment}, #{pfLikesCount}, #{pfComentText})")
+    @Insert("INSERT INTO patientfeedback (dID,pIDCard, pfTime, PatientFeedbackComment, pfLikesCount, pfComentText) VALUES (#{dID},#{pIDCard}, #{pfTime}, #{PatientFeedbackComment}, #{pfLikesCount}, #{pfComentText})")
     void insertPatientFeedback(patientfeedback patientFeedback);
 
+
     @Select("SELECT * FROM patientfeedback WHERE PatientFeedbackId = #{PatientFeedbackId}")
-    patientfeedback findPatientFeedbackById(String PatientFeedbackId);
+    patientfeedback findPatientFeedbackById(int PatientFeedbackId);
+
+    @Select("<script>" +
+            "SELECT pf.*, pi.pName, pi.pPicture " +
+            "FROM patientfeedback pf " +
+            "JOIN pinfo pi ON pf.pIDCard = pi.pIDCard " +
+            "<where> " +
+            "  <if test='dID != null'>AND pf.dID = #{dID}</if> " +
+            "</where> " +
+            "</script>")
+    List<PatientFeedbackDetail> findPatientFeedbackByDid(@Param("dID") String dID);
+
+
+
 
 
     // User表操作

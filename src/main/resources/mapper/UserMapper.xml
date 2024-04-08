@@ -2,26 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springbootquickstart.mapper.UserMapper">
 
-<!--
+
     <select id="findPinfoByPage" resultType="com.example.springbootquickstart.pojo.pinfo">
         SELECT * FROM pinfo LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <select id="findDinfoByPage" resultType="com.example.springbootquickstart.pojo.dinfo">
-        SELECT * FROM dInfo
-        <where>
-            <if test="dName != null and dName != ''">
-                AND dName = #{dName}
-            </if>
-            <if test="dJob != null and dJob != ''">
-                AND dJob = #{dJob}
-            </if>
-        </where>
-        LIMIT #{limit} OFFSET #{offset}
-    </select>
-
-
--->
 
 
 </mapper>

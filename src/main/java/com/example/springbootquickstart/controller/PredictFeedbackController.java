@@ -64,7 +64,6 @@ public class PredictFeedbackController {
 
     @GetMapping("/{predictFeedbackIdStr}")
     public ResponseEntity<predictfeedback> getPredictFeedbackById(@PathVariable String predictFeedbackIdStr) {
-        // 尝试将predictFeedbackId字符串转换为int
         int predictFeedbackId;
         try {
             predictFeedbackId = Integer.parseInt(predictFeedbackIdStr);
@@ -72,15 +71,31 @@ public class PredictFeedbackController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        // 使用服务层方法根据PredictFeedbackId获取predictfeedback对象
         predictfeedback feedback = userService.getPredictFeedbackById(predictFeedbackId);
 
-        // 检查是否找到记录
         if (feedback == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // 返回找到的predictfeedback记录
+        return new ResponseEntity<>(feedback, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/getPredictFeedbackByDrId/{drId}")
+    public ResponseEntity<predictfeedback> getPredictFeedbackByDrId(@PathVariable String drId) {
+        int drID;
+        try {
+            drID = Integer.parseInt(drId);
+        } catch (NumberFormatException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        predictfeedback feedback = userService.getPredictFeedbackByDrId(drID);
+
+        if (feedback == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<>(feedback, HttpStatus.OK);
     }
 

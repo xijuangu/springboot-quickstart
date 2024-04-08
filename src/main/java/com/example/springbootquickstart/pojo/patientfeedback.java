@@ -16,10 +16,13 @@ public class patientfeedback {
 
     @Id
     @Column(length = 255)
-    private String PatientFeedbackId;
+    private int PatientFeedbackId;
 
     @Column(length = 18)
     private String pIDCard;
+
+    @Column(length = 20)
+    private String dID;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date pfTime;
@@ -30,16 +33,19 @@ public class patientfeedback {
     @Column
     private int pfLikesCount;
 
+    @Column
+    private String dName;
+
     @Lob
     private String pfComentText;
 
     // Getter and setter methods
 
-    public String getPatientFeedbackId() {
+    public int getPatientFeedbackId() {
         return PatientFeedbackId;
     }
 
-    public void setPatientFeedbackId(String patientFeedbackId) {
+    public void setPatientFeedbackId(int patientFeedbackId) {
         PatientFeedbackId = patientFeedbackId;
     }
 
@@ -81,5 +87,13 @@ public class patientfeedback {
 
     public void setPfComentText(String pfCommentText) {
         this.pfComentText = pfCommentText;
+    }
+
+    public String getDID() {
+        return dID;
+    }
+
+    public void setDID(String dID) {
+        this.dID = dID;
     }
 }

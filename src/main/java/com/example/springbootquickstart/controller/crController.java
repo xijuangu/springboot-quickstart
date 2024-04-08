@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/communicationRecords")
+@CrossOrigin
 public class crController {
 
 

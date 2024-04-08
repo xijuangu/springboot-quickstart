@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -165,15 +167,70 @@ public class dinfoController {
     // dinfo setter
     @PostMapping("/")
     public ResponseEntity<Void> createDinfo(@RequestBody Map<String, String> dIdMap) {
+        // 检查dId是否存在且不为空
         String dId = dIdMap.get("dId");
         if (dId == null || dId.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
+        // 创建dinfo实例并设置dId
         dinfo newDoctorInfo = new dinfo();
         newDoctorInfo.setDId(dId);
+
+        // 为dinfo实例设置其他属性
+        if (dIdMap.containsKey("dName")) {
+            newDoctorInfo.setDName(dIdMap.get("dName"));
+        }
+        if (dIdMap.containsKey("dGender")) {
+            newDoctorInfo.setDGender(dIdMap.get("dGender"));
+        }
+        if (dIdMap.containsKey("dHospital")) {
+            newDoctorInfo.setDHospital(dIdMap.get("dHospital"));
+        }
+
+        if (dIdMap.containsKey("dWorkTime")) {
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                newDoctorInfo.setDWorkTime(dateFormat.parse(dIdMap.get("dWorkTime")));
+            } catch (Exception e) {
+                // 异常处理，例如日期格式错误
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+
+        if (dIdMap.containsKey("dJob")) {
+            newDoctorInfo.setDJob(dIdMap.get("dJob"));
+        }
+        if (dIdMap.containsKey("dStrength")) {
+            newDoctorInfo.setDStrength(dIdMap.get("dStrength"));
+        }
+        if (dIdMap.containsKey("dIntroduction")) {
+            newDoctorInfo.setDIntroduction(dIdMap.get("dIntroduction"));
+        }
+        if (dIdMap.containsKey("patientFeedbackId")) {
+            newDoctorInfo.setPatientFeedbackId(dIdMap.get("patientFeedbackId"));
+        }
+
+        if (dIdMap.containsKey("dPicture")) {
+            try {
+                byte[] decodedPicture = Base64.getDecoder().decode(dIdMap.get("dPicture"));
+                newDoctorInfo.setDPicture(decodedPicture);
+            } catch (IllegalArgumentException e) {
+                // 异常处理，例如Base64解码失败
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+
+        if (dIdMap.containsKey("dPasswordHash")) {
+            newDoctorInfo.setDPasswordHash(dIdMap.get("dPasswordHash"));
+        }
+
+        // 保存dinfo实例
         userService.setDinfo(newDoctorInfo);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 
 
     @PutMapping("/name/{dId}")

@@ -54,6 +54,11 @@ public class UserServiceImpl implements UserService {
         return userMapper.FindpINFOBypName(pName);
     }
 
+    public List<pinfo> getPinfoBySymptom(String pName, String pSymptom, int page, int size) {
+        int offset = (page - 1) * size;
+        return userMapper.findPinfoBySymptom(pName, pSymptom, offset, size);
+    }
+
     // 根据职位找dinfo
     public List<dinfo> getDinfoByJob(String Job){
         return userMapper.FindDinfoByJob(Job);
@@ -506,7 +511,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    // diagnosis request 添加数据操作
+    // diagnosis request 操作
     @Override
     public void addDiagnosisRequest(diagnosisrequest request) {
         userMapper.insertDiagnosisRequest(request);
@@ -514,6 +519,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public diagnosisrequest getDiagnosisRequestById(int drId) {
         return userMapper.findDiagnosisRequestById(drId);
+    }
+    @Override
+    public List<diagnosisrequest> getDiagnosisRequestsByPIDCard(String pIDCard) {
+        return userMapper.findDiagnosisRequestsByPIDCard(pIDCard);
+    }
+    @Override
+    public List<Map<String, Object>> getImagesByPIDCard(String pIDCard) {
+        return userMapper.findImagesByPIDCard(pIDCard);
     }
 
 
@@ -561,6 +574,14 @@ public class UserServiceImpl implements UserService {
         return userMapper.findPredictFeedbackById(PredictFeedbackId);
     }
 
+    public List<PatientFeedbackDetail> getPatientFeedbackByDid(String dID) {
+        return userMapper.findPatientFeedbackByDid(dID);
+    }
+    public predictfeedback getPredictFeedbackByDrId(int drId){
+        return userMapper.findPredictFeedbackByDrId(drId);
+    }
+
+
 
 
     // model操作
@@ -574,6 +595,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.findModelByName(ModelName);
     }
 
+    @Override
     public List<model> getModelByPage(int page, int size, Integer stageId, Integer imageTypeId) {
         int offset = (page - 1) * size;
         return userMapper.findModelByPage(offset, size, stageId, imageTypeId);
@@ -589,7 +611,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public patientfeedback getPatientFeedbackById(String PatientFeedbackId) {
+    public patientfeedback getPatientFeedbackById(int PatientFeedbackId) {
         return userMapper.findPatientFeedbackById(PatientFeedbackId);
     }
 
