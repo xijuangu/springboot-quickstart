@@ -33,6 +33,9 @@ public class ModelController {
         String imageTypeIdStr = requestMap.get("ImageTypeId");
         String apiPath = requestMap.get("api_path");
 
+        //
+
+
         if (modelName == null || stageIdStr == null || imageTypeIdStr == null || apiPath == null) {
             return new ResponseEntity<>("Missing fields in request", HttpStatus.BAD_REQUEST);
         }

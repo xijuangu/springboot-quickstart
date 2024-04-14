@@ -62,6 +62,13 @@ public class PredictFeedbackController {
         return new ResponseEntity<>("Predict feedback added successfully", HttpStatus.CREATED);
     }
 
+    @PostMapping("/generalComment/{PredictFeedbackId}/{generalComment}")
+    public ResponseEntity<?> addGeneralComment(@PathVariable int PredictFeedbackId, @PathVariable int generalComment)
+    {
+        userService.updateGeneralComment(generalComment, PredictFeedbackId);
+        return new ResponseEntity<>("GeneralComment updated successfully", HttpStatus.OK);
+    }
+
     @GetMapping("/{predictFeedbackIdStr}")
     public ResponseEntity<predictfeedback> getPredictFeedbackById(@PathVariable String predictFeedbackIdStr) {
         int predictFeedbackId;

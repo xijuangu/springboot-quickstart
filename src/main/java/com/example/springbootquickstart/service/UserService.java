@@ -143,6 +143,7 @@ public interface UserService {
     void addPredictFeedback(predictfeedback feedback);
     predictfeedback getPredictFeedbackById(int PredictFeedbackId);
     predictfeedback getPredictFeedbackByDrId(int drId);
+    void updateGeneralComment(int generalComment, int PredictFeedbackId);
 
 
     // model操作

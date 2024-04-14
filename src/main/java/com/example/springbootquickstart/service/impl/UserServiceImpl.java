@@ -580,7 +580,9 @@ public class UserServiceImpl implements UserService {
     public predictfeedback getPredictFeedbackByDrId(int drId){
         return userMapper.findPredictFeedbackByDrId(drId);
     }
-
+    public void updateGeneralComment(int generalComment, int PredictFeedbackId){
+        userMapper.updateGeneralComment(generalComment, PredictFeedbackId);
+    }
 
 
 
