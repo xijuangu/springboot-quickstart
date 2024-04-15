@@ -1,5 +1,6 @@
 package com.example.springbootquickstart.controller;
 
+import com.example.springbootquickstart.mapper.UserMapper;
 import com.example.springbootquickstart.pojo.predictfeedback;
 import com.example.springbootquickstart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class PredictFeedbackController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @PostMapping("/add")
     public ResponseEntity<?> addPredictFeedback(@RequestBody Map<String, String> requestMap) {
@@ -68,6 +72,14 @@ public class PredictFeedbackController {
         userService.updateGeneralComment(generalComment, PredictFeedbackId);
         return new ResponseEntity<>("GeneralComment updated successfully", HttpStatus.OK);
     }
+
+    @PostMapping("/comment/{PredictFeedbackId}/{PredictFeedbackComment}")
+    public ResponseEntity<?> addComment(@PathVariable int PredictFeedbackId, @PathVariable String PredictFeedbackComment)
+    {
+        userMapper.updateComment(PredictFeedbackComment, PredictFeedbackId);
+        return new ResponseEntity<>("PredictFeedbackComment updated successfully", HttpStatus.OK);
+    }
+
 
     @GetMapping("/{predictFeedbackIdStr}")
     public ResponseEntity<predictfeedback> getPredictFeedbackById(@PathVariable String predictFeedbackIdStr) {

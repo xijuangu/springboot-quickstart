@@ -207,6 +207,8 @@ public interface UserMapper {
     predictfeedback findPredictFeedbackByDrId(int drId);
     @Update("UPDATE predictfeedback SET generalComment = #{generalComment} WHERE PredictFeedbackId = #{PredictFeedbackId}")
     void updateGeneralComment(int generalComment, int PredictFeedbackId);
+    @Update("UPDATE predictfeedback SET PredictFeedbackComment = #{PredictFeedbackComment} WHERE PredictFeedbackId = #{PredictFeedbackId}")
+    void updateComment(String PredictFeedbackComment, int PredictFeedbackId);
 
 
     // model操作
