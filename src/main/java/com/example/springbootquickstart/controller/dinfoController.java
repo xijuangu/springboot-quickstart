@@ -2,10 +2,12 @@
 
 package com.example.springbootquickstart.controller;
 
+import com.example.springbootquickstart.mapper.UserMapper;
 import com.example.springbootquickstart.pojo.dinfo;
 import com.example.springbootquickstart.pojo.pinfo;
 import com.example.springbootquickstart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,15 @@ import java.util.Map;
 @RequestMapping("/dinfo")
 @CrossOrigin
 public class dinfoController {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @GetMapping("/getCountByDoctorWorkTime/{low}/{high}")
+    public long getCountByDoctorWorkTime(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date low,
+                                         @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date high){
+        return userMapper.countDoctorByWorkTime(low, high);
+    }
 
     @GetMapping("/getDinfoCount")
     public long getDinfoCount(@RequestParam(required = false) String dName,
@@ -99,7 +110,7 @@ public class dinfoController {
     @GetMapping("/worktime/{dId}")
     public ResponseEntity<Date> getDWorkTimeBydId(@PathVariable String dId) {
         try {
-            Date dWorkTime = userService.findDWorkTimeBydId(dId);
+            Date dWorkTime = (Date) userService.findDWorkTimeBydId(dId);
             return ResponseEntity.ok(dWorkTime);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(null);

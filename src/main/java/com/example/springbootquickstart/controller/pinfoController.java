@@ -2,6 +2,7 @@
 
 package com.example.springbootquickstart.controller;
 
+import com.example.springbootquickstart.mapper.UserMapper;
 import com.example.springbootquickstart.pojo.pinfo;
 import com.example.springbootquickstart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,14 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class pinfoController {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @GetMapping("/getCountByPatientAge/{low}/{high}")
+    public long getCountByPatientAge(@PathVariable int low, @PathVariable int high){
+        return userMapper.countPatientByAge(low, high);
+    }
 
     // 根据名字找pinfo
     @GetMapping("/getpinfoByName/{pName}")

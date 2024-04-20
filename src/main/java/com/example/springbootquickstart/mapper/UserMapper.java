@@ -6,12 +6,21 @@ import com.example.springbootquickstart.pojo.*;
 import org.apache.ibatis.annotations.*;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @Mapper
 public interface UserMapper {
 
+
+    // 患者年龄分布计数
+    @Select("SELECT COUNT(*) FROM pinfo WHERE pAge >= #{low} AND pAge < #{high}")
+    long countPatientByAge(int low, int high);
+
+    // 医生从业时间分布计数
+    @Select("SELECT COUNT(*) FROM dinfo WHERE dWorkTime >= #{low} AND dWorkTime < #{high}")
+    long countDoctorByWorkTime(Date low, Date high);
 
 
 
