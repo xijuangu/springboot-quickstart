@@ -603,6 +603,11 @@ public class UserServiceImpl implements UserService {
         return userMapper.findModelByPage(offset, size, stageId, imageTypeId);
     }
 
+    @Override
+    public long getMonthlyModelCounts(String month) {
+        return userMapper.countModelsByMonth(month);
+    }
+
 
 
 

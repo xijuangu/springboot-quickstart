@@ -150,6 +150,7 @@ public interface UserService {
     void addModel(model model);
     model getModelByName(String ModelName);
     List<model> getModelByPage(int page, int size, Integer stageId, Integer imageTypeId);
+    long getMonthlyModelCounts(String month);
 
 
     // patientfeedback操作

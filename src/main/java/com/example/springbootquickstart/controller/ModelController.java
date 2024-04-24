@@ -70,4 +70,9 @@ public class ModelController {
 
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
+
+    @GetMapping("/monthlyModelCounts/{month}")
+    public long getMonthlyModelCounts(@PathVariable String month) {
+        return userService.getMonthlyModelCounts(month);
+    }
 }

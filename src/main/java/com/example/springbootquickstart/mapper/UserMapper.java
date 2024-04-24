@@ -241,6 +241,10 @@ public interface UserMapper {
                                 @Param("imageTypeId") Integer imageTypeId);
 
 
+    @Select("SELECT COUNT(*) FROM model WHERE SUBSTRING(modelName, 1, 7) = #{month}")
+    Long countModelsByMonth(@Param("month") String month);
+
+
     // patientfeedback 操作
     @Insert("INSERT INTO patientfeedback (dID,pIDCard, pfTime, PatientFeedbackComment, pfLikesCount, pfComentText) VALUES (#{dID},#{pIDCard}, #{pfTime}, #{PatientFeedbackComment}, #{pfLikesCount}, #{pfComentText})")
     void insertPatientFeedback(patientfeedback patientFeedback);
