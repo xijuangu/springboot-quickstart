@@ -380,9 +380,13 @@ public class UserServiceImpl implements UserService {
     // dinfo setters
     @Override
     public int setDinfo(dinfo doctorInfo) {
-        String sql = "INSERT INTO dinfo (dId, dName, dGender, dHospital, dWorkTime, dJob, dStrength, dIntroduction, PatientFeedbackId, dPicture, dPasswordHash) " +
-                "VALUES (:dId, :dName, :dGender, :dHospital, :dWorkTime, :dJob, :dStrength, :dIntroduction, :PatientFeedbackId, :dPicture, :dPasswordHash)";
+        // 尝试更新现有记录
+        String updateSql = "UPDATE dinfo SET dName = :dName, dGender = :dGender, dHospital = :dHospital, " +
+                "dWorkTime = :dWorkTime, dJob = :dJob, dStrength = :dStrength, dIntroduction = :dIntroduction, " +
+                "PatientFeedbackId = :PatientFeedbackId, dPicture = :dPicture, dPasswordHash = :dPasswordHash " +
+                "WHERE dId = :dId";
 
+        // 准备参数
         Map<String, Object> params = new HashMap<>();
         params.put("dId", doctorInfo.getDId());
         params.put("dName", doctorInfo.getDName());
@@ -396,8 +400,19 @@ public class UserServiceImpl implements UserService {
         params.put("dPicture", doctorInfo.getDPicture());
         params.put("dPasswordHash", doctorInfo.getDPasswordHash());
 
-        return jdbcTemplate.update(sql, params);
+        int updated = jdbcTemplate.update(updateSql, params);
+
+        if (updated == 0) {
+            // 如果没有记录被更新，执行插入
+            String insertSql = "INSERT INTO dinfo (dId, dName, dGender, dHospital, dWorkTime, dJob, dStrength, " +
+                    "dIntroduction, PatientFeedbackId, dPicture, dPasswordHash) " +
+                    "VALUES (:dId, :dName, :dGender, :dHospital, :dWorkTime, :dJob, :dStrength, " +
+                    ":dIntroduction, :PatientFeedbackId, :dPicture, :dPasswordHash)";
+            return jdbcTemplate.update(insertSql, params);
+        }
+        return updated;
     }
+
 
     @Override
     public int updateDNameBydId(String dId, String dName) {
