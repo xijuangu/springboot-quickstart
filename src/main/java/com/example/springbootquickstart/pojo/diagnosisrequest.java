@@ -5,6 +5,8 @@ package com.example.springbootquickstart.pojo;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "diagnosisrequest")
 @JsonIgnoreProperties(ignoreUnknown = true) // 添加此行来忽略未知属性
@@ -24,6 +26,12 @@ public class diagnosisrequest {
 
     @Lob
     private String Image; // 保持不变，因为它将存储JSON字符串
+
+    private Date requestTime;
+
+    public Date getRequestTime(){ return requestTime; }
+
+    public void setRequestTime(Date time){ this.requestTime = time; }
 
 
     public String getPIDCard() {

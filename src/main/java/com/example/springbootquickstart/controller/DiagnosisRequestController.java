@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,47 +26,54 @@ public class DiagnosisRequestController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addDiagnosisRequest(@RequestBody Map<String, Object> requestMap) {
-        // 从请求映射中提取字段
+        // 从请求映射中提取字段并进行基本验证
         String dId = (String) requestMap.get("dId");
-        //  String imageTypeIdStr = (String) requestMap.get("ImageTypeId");
-        String ModelName = (String) requestMap.get("ModelName");
-        //  int operationFlag = (int) requestMap.get("operationFlag");
-        // 此处处理Image字段时，需要正确处理它是一个Map的情况
+        String modelName = (String) requestMap.get("ModelName");
         Object imageObject = requestMap.get("Image");
         String pIDCard = (String) requestMap.get("pIDCard");
+        String time = (String) requestMap.get("requestTime");
 
-        // 基本验证省略
+        // 检查关键字段是否为空
+        if (dId == null || modelName == null || pIDCard == null || time == null) {
+            return new ResponseEntity<>("Missing required fields", HttpStatus.BAD_REQUEST);
+        }
 
-        // 转换ImageTypeId为整数
-//        int imageTypeId;
-//        try {
-//            imageTypeId = Integer.parseInt(imageTypeIdStr);
-//        } catch (NumberFormatException e) {
-//            return new ResponseEntity<>("Invalid format for ImageTypeId", HttpStatus.BAD_REQUEST);
-//        }
+        // 定义日期格式
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date requestTime;
 
-        // 将Image对象转换为JSON字符串
+        try {
+            // 尝试解析日期字符串
+            requestTime = formatter.parse(time);
+        } catch (ParseException e) {
+            // 日期字符串格式错误，返回详细的错误信息
+            return new ResponseEntity<>("Invalid date format for requestTime, expected format: yyyy-MM-dd HH:mm:ss", HttpStatus.BAD_REQUEST);
+        }
+
+        // 将 Image 对象转换为 JSON 字符串
         ObjectMapper objectMapper = new ObjectMapper();
-        String imageJson = null;
+        String imageJson;
         try {
             imageJson = objectMapper.writeValueAsString(imageObject);
         } catch (JsonProcessingException e) {
+            // JSON 处理出错，返回错误信息
             return new ResponseEntity<>("Error processing image JSON", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        // 创建新的diagnosisrequest对象并设置字段
+        // 创建新的 diagnosisrequest 对象并设置字段
         diagnosisrequest newRequest = new diagnosisrequest();
         newRequest.setDId(dId);
-        newRequest.setModelName(ModelName);
-        //  newRequest.setoperationFlag(operationFlag);
-        newRequest.setImage(imageJson); // 使用转换后的JSON字符串设置Image字段
+        newRequest.setModelName(modelName);
+        newRequest.setImage(imageJson);
         newRequest.setPIDCard(pIDCard);
+        newRequest.setRequestTime(requestTime);
 
-        // 添加到数据库的逻辑不变
+        // 将新记录添加到数据库
         userService.addDiagnosisRequest(newRequest);
 
         return new ResponseEntity<>("Diagnosis request added successfully", HttpStatus.CREATED);
     }
+
 
     @GetMapping("/{drIdStr}")
     public ResponseEntity<diagnosisrequest> getDiagnosisRequestById(@PathVariable String drIdStr) {

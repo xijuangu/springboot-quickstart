@@ -156,7 +156,7 @@ public interface UserMapper {
 
 
     // diagnosis request 操作
-    @Insert("INSERT INTO diagnosisrequest (drId, dId, Image, pIDCard, ModelName) VALUES (#{drId}, #{dId}, #{Image}, #{pIDCard}, #{ModelName})")
+    @Insert("INSERT INTO diagnosisrequest (drId, dId, Image, pIDCard, ModelName, requestTime) VALUES (#{drId}, #{dId}, #{Image}, #{pIDCard}, #{ModelName}, #{requestTime})")
     void insertDiagnosisRequest(diagnosisrequest request);
 
     @Select("SELECT * FROM diagnosisrequest WHERE drId = #{drId}")
