@@ -81,6 +81,15 @@ public interface UserMapper {
                                 @Param("dName") String dName,
                                 @Param("dJob") String dJob);
 
+    @Select("<script>" +
+            "SELECT COUNT(*) FROM dinfo" +
+            "<where>" +
+            "  <if test='dName != null'>AND dName = #{dName}</if>" +
+            "  <if test='dJob != null'>AND dJob = #{dJob}</if>" +
+            "</where>" +
+            "</script>")
+    int countDinfo(@Param("dName") String dName, @Param("dJob") String dJob);
+
 
 
 

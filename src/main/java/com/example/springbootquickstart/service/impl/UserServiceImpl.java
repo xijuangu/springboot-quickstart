@@ -77,6 +77,19 @@ public class UserServiceImpl implements UserService {
         return userMapper.findDinfoByPage(offset, size, dName, dJob);
     }
 
+    public Map<String, Object> getDinfoWithTotalByPage(int page, int size, String dName, String dJob) {
+        int offset = (page - 1) * size;
+        List<dinfo> dinfos = userMapper.findDinfoByPage(offset, size, dName, dJob);
+        int total = userMapper.countDinfo(dName, dJob);
+
+        // 将数据和总数包装成一个 Map 结构返回
+        Map<String, Object> result = new HashMap<>();
+        result.put("total", total);
+        result.put("data", dinfos);
+        return result;
+    }
+
+
 
 
     //pinfo getter

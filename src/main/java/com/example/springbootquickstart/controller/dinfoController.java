@@ -57,11 +57,11 @@ public class dinfoController {
         return userService.getDinfoByPage(page, size);
     }*/
     @GetMapping("/getDinfoByPage")
-    public List<dinfo> getDinfoByPage(@RequestParam("page") int page,
-                                      @RequestParam("size") int size,
-                                      @RequestParam(required = false) String dName,
-                                      @RequestParam(required = false) String dJob) {
-        return userService.getDinfoByPage(page, size, dName, dJob);
+    public Map<String, Object> getDinfoByPage(@RequestParam("page") int page,
+                                              @RequestParam("size") int size,
+                                              @RequestParam(required = false) String dName,
+                                              @RequestParam(required = false) String dJob) {
+        return userService.getDinfoWithTotalByPage(page, size, dName, dJob);
     }
 
     @Autowired

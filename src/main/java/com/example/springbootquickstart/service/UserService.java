@@ -13,6 +13,8 @@ public interface UserService {
     public long countDinfo(String dName, String dJob);
     public long countTotalDinfo();
 
+    Map<String, Object> getDinfoWithTotalByPage(int page, int size, String dName, String dJob);
+
     //pinfo getter
 
     public String FindAddressById(String id);
