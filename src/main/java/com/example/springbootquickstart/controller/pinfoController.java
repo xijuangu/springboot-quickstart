@@ -15,6 +15,7 @@ import java.util.List;
 
 
 @CrossOrigin
+@RequestMapping("/pinfo")
 @RestController
 public class pinfoController {
 
@@ -33,12 +34,30 @@ public class pinfoController {
     }
 
     @GetMapping("/getpinfoBySymptom")
-    public List<pinfo> getPinfoByNameAndSymptom(@RequestParam(value = "page") int offset,
-                                                @RequestParam(value = "size") int limit,
+    public List<pinfo> getPinfoByNameAndSymptom(@RequestParam(value = "page", defaultValue = "0") int offset,
+                                                @RequestParam(value = "size", defaultValue = "10") int limit,
                                                 @RequestParam(value = "pName", required = false) String pName,
                                                 @RequestParam(value = "pSymptom", required = false) String pSymptom) {
-        return userService.getPinfoBySymptom(pName, pSymptom, offset, limit);
+        // Log input parameters for debugging
+        // System.out.println("Parameters - page: " + offset + ", size: " + limit + ", pName: " + pName + ", pSymptom: " + pSymptom);
+
+        // Handle null or empty string cases
+        if (pName == null || pName.isEmpty() || pName.equals("undefined")) {
+            pName = "";
+        }
+        if (pSymptom == null || pSymptom.isEmpty() || pSymptom.equals("undefined")) {
+            pSymptom = "";
+        }
+
+
+        List<pinfo> result = userService.getPinfoBySymptom(pName, pSymptom, offset, limit);
+
+        // Log the result for debugging
+        // System.out.println("Result size: " + result.size());
+
+        return result;
     }
+
 
 
     // 分页查询pinfo

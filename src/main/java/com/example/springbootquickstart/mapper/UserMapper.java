@@ -49,8 +49,8 @@ public interface UserMapper {
     @Select("<script>" +
             "SELECT * FROM pinfo" +
             "<where>" +
-            "  <if test='pName != null'>AND pName = #{pName}</if>" +
-            "  <if test='pSymptom != null'>AND pSymptom = #{pSymptom}</if>" +
+            "  <if test='pName != null and pName != \"\"'>AND pName = #{pName}</if>" +
+            "  <if test='pSymptom != null and pSymptom != \"\"'>AND pSymptom = #{pSymptom}</if>" +
             "</where>" +
             "LIMIT #{limit} OFFSET #{offset}" +
             "</script>")
@@ -58,6 +58,7 @@ public interface UserMapper {
                                    @Param("pSymptom") String pSymptom,
                                    @Param("offset") int offset,
                                    @Param("limit") int limit);
+
     // 根据职位找dinfo
     @Select("select * from dinfo where dJob = #{Job}")
     public List<dinfo> FindDinfoByJob(String Job);
@@ -228,6 +229,12 @@ public interface UserMapper {
     @Update("UPDATE predictfeedback SET PredictFeedbackComment = #{PredictFeedbackComment} WHERE PredictFeedbackId = #{PredictFeedbackId}")
     void updateComment(String PredictFeedbackComment, int PredictFeedbackId);
 
+    @Update("UPDATE diagnosisrequest SET operationFlag = 1 WHERE drId = #{drId}")
+    void updateOperationFlag(int drId);
+
+    @Select("SELECT drId FROM predictfeedback WHERE PredictFeedbackId = #{PredictFeedbackId}")
+    int findDrIdByPredictFeedbackId(int PredictFeedbackId);
+
 
     // model操作
     @Insert("INSERT INTO model (ModelName, StageId, ImageTypeId, api_path) VALUES (#{ModelName}, #{StageId}, #{ImageTypeId}, #{apiPath})")
@@ -277,11 +284,14 @@ public interface UserMapper {
 
 
     // User表操作
-    @Insert("INSERT INTO User(username, password, userType) VALUES(#{username}, #{password}, #{userType})")
+    @Insert("INSERT INTO User(username, password, userType, identification) VALUES(#{username}, #{password}, #{userType}, #{identification})")
     int insertUser(User user);
 
     @Select("SELECT * FROM User WHERE id = #{id}")
     User findUserById(int id);
+
+    @Select("SELECT id FROM User WHERE id = #{id} AND password = #{password}")
+    Integer userLogin(int id, String password);
 
 
 

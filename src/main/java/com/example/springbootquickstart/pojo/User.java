@@ -24,7 +24,17 @@ public class User {
     @Column(nullable = false)
     private UserType userType;
 
+    private String identification;
+
     // 构造函数
+
+    public String getIdentification() {
+        return identification;
+    }
+
+    public void setIdentification(String identification) {
+        this.identification = identification;
+    }
     public User() {
     }
 

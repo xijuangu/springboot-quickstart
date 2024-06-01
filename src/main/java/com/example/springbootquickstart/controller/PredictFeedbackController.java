@@ -76,6 +76,7 @@ public class PredictFeedbackController {
     @PostMapping("/comment/{PredictFeedbackId}/{PredictFeedbackComment}")
     public ResponseEntity<?> addComment(@PathVariable int PredictFeedbackId, @PathVariable String PredictFeedbackComment)
     {
+        userMapper.updateOperationFlag(userMapper.findDrIdByPredictFeedbackId(PredictFeedbackId));
         userMapper.updateComment(PredictFeedbackComment, PredictFeedbackId);
         return new ResponseEntity<>("PredictFeedbackComment updated successfully", HttpStatus.OK);
     }

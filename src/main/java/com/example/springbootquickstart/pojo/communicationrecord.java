@@ -26,7 +26,7 @@ public class communicationrecord {
     @Temporal(TemporalType.DATE)
     private Date crTime;
 
-    private Integer crTexter;
+    private String crTexter;
 
     // setter and getter
 
@@ -76,11 +76,11 @@ public class communicationrecord {
         this.crText = crText;
     }
 
-    public Integer getCrTexter() {
+    public String getCrTexter() {
         return crTexter;
     }
 
-    public void setCrTexter(Integer crTexter) {
+    public void setCrTexter(String crTexter) {
         this.crTexter = crTexter;
     }
 
